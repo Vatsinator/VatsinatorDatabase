@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% load staticfiles %}
+<html>
+<head>
+<title>{% block title %}VatsinatorDatabase{% endblock %}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700&subset=latin,latin-ext" rel="stylesheet" type="text/css" />
+  <link href="{% static "css/common.css" %}" rel="stylesheet" type="text/css" />
+  <link href="{% static "css/navigation.css" %}" rel="stylesheet" type="text/css" />
+  
+  <script src="{% static "js/jquery-2.0.3.min.js" %}" type="text/javascript"></script>
+  <script src="{% static "js/editable.js" %}" type="text/javascript"></script>
+  <script src="{% static "js/vatsinatordatabase.js" %}" type="text/javascript"></script>
+  
+  {% block js %}{% endblock %}
+  {% block css %}{% endblock %}
+</head>
+<body>
+  <div id="header">
+    <div>
+      <h1>
+        <a href="/">VatsinatorDatabase</a>
+        {% if in_beta %}<span class="beta">beta</span>{% endif %}
+      </h1>
+      <div id="menu">
+        <ul class="menu_top">
+          <li>
+            <a href="/browse">Browse &#x25BE;</a>
+            <ul class="menu_sub">
+              <li><a href="/airports/">Airports</a></li>
+              <li><a href="/airlines">Airlines</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="logo"></div>
+    </div>
+  </div>  
+  <div id="bodyWrapper">
+    {% block content %}{% endblock %}
+    
+    <div id="footer">
+      <div class="copyright">{% block copyright %}by Vatsinator Team &copy; 2013{% endblock %}</div>
+    </div>
+  </div>
+</body>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  vd.init();
+});
+
+</script>
+</html>

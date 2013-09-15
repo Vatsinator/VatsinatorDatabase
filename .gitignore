@@ -1,0 +1,12 @@
+# KDevelop project file
+*.kdev4
+
+# dolphin
+.directory
+
+# Compiled python modules
+*.pyc
+
+# This should be hidden
+db.cnf
+

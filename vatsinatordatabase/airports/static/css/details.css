@@ -1,0 +1,33 @@
+span.line {
+  clear: both;
+  width: 400px;
+  display: block;
+  padding: 2px;
+  height: 18px;
+}
+
+  span.line .left {
+    margin-right: 10px;
+    display: block;
+    float: left;
+    clear: left;
+    width: 150px;
+  }
+
+  span.line .right {
+    font-weight: bold;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    min-width: 10px;
+  }
+  
+  span.line .none {
+    color: #999999;
+    font-weight: normal;
+  }
+  
+#bodyWrapper input[type=text].inline {
+  padding: 0;
+}
+

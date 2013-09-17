@@ -31,3 +31,9 @@ span.line {
   padding: 0;
 }
 
+span.editModeLabel {
+  float: right;
+  font-size: 13px;
+  color: #777777;
+}
+

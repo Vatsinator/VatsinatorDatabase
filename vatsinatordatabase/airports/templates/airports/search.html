@@ -12,7 +12,7 @@
 <p>
   <form action="{% url 'search' %}" method="get">
     <input type="text" title="ICAO code" name="q"{% if q %} value="{{ q }}"{% endif %} />
-    <input type="submit" value="Search" />
+    <input type="submit" value="Search" class="cyan" />
   </form>
 </p>
 

@@ -123,7 +123,6 @@ INSTALLED_APPS = (
   'django.contrib.staticfiles',
   
   'vatsinatordatabase.airports',
-  'vatsinatordatabase.staticpages',
 )
 
 # A sample logging configuration. The only tangible logging

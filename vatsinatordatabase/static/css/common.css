@@ -123,15 +123,11 @@ body {
     border-radius: 2px;
   }
   
-  #bodyWrapper input:hover {
-    border: 1px solid #28B0FF;
-  }
-  
   #bodyWrapper input[type=text] {
     background-color: #ffffff;
     border: 1px solid #D2D2D2;
     width: 200px;
-    padding: 5px;
+    padding: 8px 18px;
   }
   
   #bodyWrapper input[type=text]:hover,
@@ -146,19 +142,45 @@ body {
     }
   
   #bodyWrapper input[type=button],
-  #bodyWrapper input[type=submit] {
-    font-weight: bold;
-    padding: 5px 10px 5px 10px;
-    background-color: #50C5FF;
-    border: 1px solid #87D1FF;
-    color: #F2F2F2;
+  #bodyWrapper input[type=submit],
+  #bodyWrapper button {
+    color: #ffffff;
+    padding: 8px 18px;
+    border: 1px solid #ffffff;
   }
   
   #bodyWrapper input[type=button]:hover,
-  #bodyWrapper input[type=submit]:hover {
+  #bodyWrapper input[type=submit]:hover,
+  #bodyWrapper button:hover {
     color: #ffffff;
-    background-color: #2BAEFF;
   }
+  
+    /* Color: cyan */
+    #bodyWrapper input[type=button].cyan,
+    #bodyWrapper input[type=submit].cyan,
+    #bodyWrapper button.cyan {
+      background-color: #47BAFF;
+    }
+    
+    #bodyWrapper input[type=button].cyan:hover,
+    #bodyWrapper input[type=submit].cyan:hover,
+    #bodyWrapper button.cyan:hover {
+      background-color: #2BAEFF;
+    }
+    
+    /* Color: red */
+    #bodyWrapper input[type=button].red,
+    #bodyWrapper input[type=submit].red,
+    #bodyWrapper button.red {
+      background-color: #F49194;
+    }
+    
+    #bodyWrapper input[type=button].red:hover,
+    #bodyWrapper input[type=submit].red:hover,
+    #bodyWrapper button.red:hover {
+      background-color: #F1767A;
+    }
+    
     
   #bodyWrapper ul {
     list-style-type: none;

@@ -95,102 +95,6 @@ body {
         text-align: center;
       }
   
-  #bodyWrapper a  {
-    color: #2296D9;
-    text-decoration: none;
-  }
-  
-  #bodyWrapper a:hover {
-    color: #23DBEB;
-  }
-  
-    #bodyWrapper a.paginating {
-      color: #4B4B4B;
-      font-weight: bold;
-      font-size: 12px;
-    }
-
-    #bodyWrapper a.paginating:hover {
-      color: #313131;
-    }
-    
-    #bodyWrapper a.disabled {
-      cursor: default;
-      color: #aaaaaa;
-    }
-  
-  #bodyWrapper input {
-    border-radius: 2px;
-  }
-  
-  #bodyWrapper input[type=text] {
-    background-color: #ffffff;
-    border: 1px solid #D2D2D2;
-    width: 200px;
-    padding: 8px 18px;
-  }
-  
-  #bodyWrapper input[type=text]:hover,
-  #bodyWrapper input[type=text]:focus {
-    border: 1px solid #A1A1A1;
-    box-shadow: inset 2px 2px 2px 0px #dddddd;
-  }
-  
-    #bodyWrapper input[type=text].default {
-      font-style: italic;
-      color: #B2B2B2;
-    }
-  
-  #bodyWrapper input[type=button],
-  #bodyWrapper input[type=submit],
-  #bodyWrapper button {
-    color: #ffffff;
-    padding: 8px 18px;
-    border: 1px solid #ffffff;
-  }
-  
-  #bodyWrapper input[type=button]:hover,
-  #bodyWrapper input[type=submit]:hover,
-  #bodyWrapper button:hover {
-    color: #ffffff;
-  }
-  
-    /* Color: cyan */
-    #bodyWrapper input[type=button].cyan,
-    #bodyWrapper input[type=submit].cyan,
-    #bodyWrapper button.cyan {
-      background-color: #47BAFF;
-    }
-    
-    #bodyWrapper input[type=button].cyan:hover,
-    #bodyWrapper input[type=submit].cyan:hover,
-    #bodyWrapper button.cyan:hover {
-      background-color: #2BAEFF;
-    }
-    
-    /* Color: red */
-    #bodyWrapper input[type=button].red,
-    #bodyWrapper input[type=submit].red,
-    #bodyWrapper button.red {
-      background-color: #F49194;
-    }
-    
-    #bodyWrapper input[type=button].red:hover,
-    #bodyWrapper input[type=submit].red:hover,
-    #bodyWrapper button.red:hover {
-      background-color: #F1767A;
-    }
-    
-    
-  #bodyWrapper ul {
-    list-style-type: none;
-  }
-  
-    #bodyWrapper ul li {
-      background: #ffffff url("../../static/img/list-style-image.png") no-repeat 0px 5px;
-      padding-left: 15px;
-    }
-  
   #bodyWrapper p + h1 {
     margin-top: 20px;
   }
@@ -213,4 +117,94 @@ body {
     #bodyWrapper #footer .copyright {
       margin: 5px 5px 0 0;
     }
+  
+a {
+  color: #2296D9;
+  text-decoration: none;
+}
+  
+  a:hover {
+    color: #23DBEB;
+  }
+  
+  a.paginating {
+    color: #4B4B4B;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+    a.paginating:hover {
+      color: #313131;
+    }
+  
+input {
+  border-radius: 2px;
+}
+  
+input[type=text] {
+  background-color: #ffffff;
+  border: 1px solid #D2D2D2;
+  width: 200px;
+  padding: 8px 18px;
+}
+
+  input[type=text]:hover,
+  input[type=text]:focus {
+    border: 1px solid #A1A1A1;
+    box-shadow: inset 2px 2px 2px 0px #dddddd;
+  }
+  
+    input[type=text].default {
+      font-style: italic;
+      color: #B2B2B2;
+    }
+  
+input[type=button],
+input[type=submit],
+button {
+  color: #ffffff;
+  padding: 8px 18px;
+  border: 1px solid #ffffff;
+}
+  
+  input[type=button]:hover,
+  input[type=submit]:hover,
+  button:hover {
+    color: #ffffff;
+  }
+  
+  /* Color: cyan */
+  input[type=button].cyan,
+  input[type=submit].cyan,
+  button.cyan {
+    background-color: #47BAFF;
+  }
+  
+    input[type=button].cyan:hover,
+    input[type=submit].cyan:hover,
+    button.cyan:hover {
+      background-color: #2BAEFF;
+    }
+  
+  /* Color: red */
+  input[type=button].red,
+  input[type=submit].red,
+  button.red {
+    background-color: #F49194;
+  }
+  
+    input[type=button].red:hover,
+    input[type=submit].red:hover,
+    button.red:hover {
+      background-color: #F1767A;
+    }
+  
+ul {
+  list-style-type: none;
+}
+
+ul li {
+  background: #ffffff url("../../static/img/list-style-image.png") no-repeat 0px 5px;
+  padding-left: 15px;
+}
   

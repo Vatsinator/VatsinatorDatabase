@@ -1,10 +1,12 @@
 ul.menu_top {
   list-style: none;
+  background: transparent;
 }
 
   ul.menu_top li {
     float: left;
     position: relative;
+    background: transparent;
   }
   
     ul.menu_top li a {

@@ -7,6 +7,7 @@ var ui = {
   saveDetailsBtn: $("<input>"),
   cancelBtn: $("<input>"),
   editModeLabel: $("<span>"),
+  editDialog: $("<div>"),
   
   setup: function() {
     this.buttonField = $("#buttonField");
@@ -31,29 +32,59 @@ var ui = {
       .addClass("editModeLabel")
       .hide()
       .appendTo(ui.buttonField);
+    
+    this.editDialog
+      .append($("<p>")
+        .html("You are now about to enter the edit mode.")
+      )
+      .append($("<p>")
+        .css("font-size", "13px")
+        .html("In the edit mode, you can modify every attribute of this airport " +
+          "you want. Although, after you commit the changes, they need to be " +
+          "reviewed and acceppted by one of the moderators. You will be notified " +
+          "when your modifications are applied to the database.")
+      )
+      .append($("<p>")
+        .css("margin-bottom", "15px")
+        .html("Do you want to continue?")
+       )
+      .append($("<input>")
+        .attr("type", "button")
+        .css("margin-top", "15px")
+        .val("Continue")
+        .addClass("cyan")
+        .click(function() {
+          ui.editDialog.dialog("close");
+          enableEdit();
+        })
+      )
   }
 };
+
+function enableEdit() {
+  ui.enableEditModeBtn.hide();
+  
+  $(".line > .right").editable({
+    defaultVal: "unknown",
+    editIcon: "/static/img/edit.png",
+    onCommit: function(oldData, newData) {
+      if (newData == "unknown")
+        $(this).addClass("none");
+      if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
+        return false;
+    }
+  });
+
+  ui.saveDetailsBtn.show();
+  ui.cancelBtn.show();
+  ui.editModeLabel.show();
+}
 
 $(document).ready(function() {
   ui.setup();
   
   ui.enableEditModeBtn.click(function() {
-    $(this).hide();
-    
-    $(".line > .right").editable({
-      defaultVal: "unknown",
-      editIcon: "/static/img/edit.png",
-      onCommit: function(oldData, newData) {
-        if (newData == "unknown")
-          $(this).addClass("none");
-        if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
-          return false;
-      }
-    });
-
-    ui.saveDetailsBtn.show();
-    ui.cancelBtn.show();
-    ui.editModeLabel.show();
+    ui.editDialog.dialog("open");
   });
   
   ui.cancelBtn.click(function() {

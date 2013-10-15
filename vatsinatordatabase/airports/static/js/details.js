@@ -9,6 +9,25 @@ var ui = {
   editModeLabel: $("<span>"),
   editDialog: $("<div>"),
   
+  initGMaps: function() {
+    var longitude = parseFloat($("#longitude").val());
+    var latitude = parseFloat($("#latitude").val());
+    
+    var options = {
+      center: new google.maps.LatLng(latitude, longitude),
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    
+    this.map = new google.maps.Map(document.getElementById("map-canvas"), options);
+    this.marker = new google.maps.Marker({
+      map: this.map,
+      draggable: false,
+      animation: google.maps.Animation.DROP,
+      position: new google.maps.LatLng(latitude, longitude)
+    });
+  },
+  
   setup: function() {
     this.buttonField = $("#buttonField");
     this.enableEditModeBtn = $("#enableEditModeBtn");
@@ -74,7 +93,7 @@ function enableEdit() {
         return false;
     }
   });
-
+  
   ui.saveDetailsBtn.show();
   ui.cancelBtn.show();
   ui.editModeLabel.show();
@@ -82,6 +101,7 @@ function enableEdit() {
 
 $(document).ready(function() {
   ui.setup();
+  ui.initGMaps();
   
   ui.enableEditModeBtn.click(function() {
     ui.editDialog.dialog("open");

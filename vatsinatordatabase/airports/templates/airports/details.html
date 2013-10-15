@@ -9,12 +9,16 @@
 
 {% block js %}
   <script src="{% static "js/details.js" %}" type="text/javascript"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd169CLoI22Vbm64nYB9i4Wzc0cvroXfI&sensor=false"></script>
 {% endblock %}
 
 {% block content %}
 <h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
 
 <p id="details">
+  <input type="hidden" id="latitude" value="{{ ap.latitude }}" />
+  <input type="hidden" id="longitude" value="{{ ap.longitude }}" />
+
   <span class="line">
     <span class="left">ICAO code:</span>
     <span class="right" id="icao">{{ ap.icao }}</span>
@@ -50,7 +54,8 @@
   </span>
   
 </p>
-<p style="height: 20px;"></p>
+<div id="map-canvas"></div>
+<p style="height: 20px; clear:both;"></p>
 <p id="buttonField">
   <input type="button" id="enableEditModeBtn" value="Enable edit mode" class="cyan" />
 </p>

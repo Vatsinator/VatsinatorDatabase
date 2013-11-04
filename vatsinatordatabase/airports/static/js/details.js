@@ -8,6 +8,7 @@ var ui = {
   cancelBtn: $("<input>"),
   editModeLabel: $("<span>"),
   editDialog: $("<div>"),
+  confirmDialog: $("<div>"),
   
   editEnable : function() {
     this.enableEditModeBtn.hide();
@@ -91,6 +92,46 @@ var ui = {
           ui.editEnable();
         })
       );
+    
+    this.confirmDialog
+      .append($("<p>")
+        .html("Confirm")
+      )
+      .append($("<p>")
+        .css("font-size", "13px")
+        .html("Please confirm your changes by describing them briefly and giving us " +
+          "your e-mail address, so we can let you know when they are commited.")
+      )
+      .append($("<p>")
+        .html("Brief description: ")
+        .append($("<input>")
+          .attr("type", "text")
+        )
+      )
+      .append($("<p>")
+        .html("E-mail address: ")
+        .append($("<input>")
+          .attr("type", "text")
+        )  
+      )
+      .append($("<input>")
+        .attr("type", "button")
+        .css("margin-top", "15px")
+        .val("Confirm")
+        .addClass("cyan")
+        .click(function() {
+          $(this)
+            .val("Sending...")
+            .attr("disabled", "disabled");
+          
+          dataHandler.commit(function() {
+            ui.confirmDialog.dialog("close");
+            ui.editCancel();
+          });
+        })
+      );
+    
+    this.saveDetailsBtn.click(function() { ui.confirmDialog.dialog("open"); });
       
     this.enableEditModeBtn.click(function() {
       ui.editDialog.dialog("open");
@@ -160,6 +201,12 @@ var map = {
       map.updateLatLon(map.marker.getPosition().lat(),
                        map.marker.getPosition().lng());
     });
+  }
+};
+
+var dataHandler = {
+  commit: function(callback) {
+    setTimeout(function() { callback() }, 2000);
   }
 };
 

@@ -9,26 +9,40 @@ var ui = {
   editModeLabel: $("<span>"),
   editDialog: $("<div>"),
   
-  initGMaps: function() {
-    var longitude = parseFloat($("#longitude").val());
-    var latitude = parseFloat($("#latitude").val());
+  editEnable : function() {
+    this.enableEditModeBtn.hide();
     
-    var options = {
-      center: new google.maps.LatLng(latitude, longitude),
-      zoom: 13,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    
-    this.map = new google.maps.Map(document.getElementById("map-canvas"), options);
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      draggable: false,
-      animation: google.maps.Animation.DROP,
-      position: new google.maps.LatLng(latitude, longitude)
+    $(".line > .right").editable({
+      defaultVal: "unknown",
+      editIcon: "/static/img/edit.png",
+      onCommit: function(oldData, newData) {
+        if (newData == "unknown")
+          $(this).addClass("none");
+        if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
+          return false;
+        }
     });
+  
+    this.saveDetailsBtn.show();
+    this.cancelBtn.show();
+    this.editModeLabel.show();
+    
+    map.editEnable();
   },
   
-  setup: function() {
+  editCancel: function() {
+    this.cancelBtn.hide();
+    this.saveDetailsBtn.hide();
+    this.editModeLabel.hide();
+    
+    $(".line > .right").editableCancel();
+    
+    this.enableEditModeBtn.show();
+    
+    map.editCancel();
+  },
+  
+  init: function() {
     this.buttonField = $("#buttonField");
     this.enableEditModeBtn = $("#enableEditModeBtn");
     
@@ -66,7 +80,7 @@ var ui = {
       .append($("<p>")
         .css("margin-bottom", "15px")
         .html("Do you want to continue?")
-       )
+      )
       .append($("<input>")
         .attr("type", "button")
         .css("margin-top", "15px")
@@ -74,47 +88,82 @@ var ui = {
         .addClass("cyan")
         .click(function() {
           ui.editDialog.dialog("close");
-          enableEdit();
+          ui.editEnable();
         })
-      )
+      );
+      
+    this.enableEditModeBtn.click(function() {
+      ui.editDialog.dialog("open");
+    });
+    
+    this.cancelBtn.click(function() {
+      ui.editCancel();
+    });
   }
 };
 
-function enableEdit() {
-  ui.enableEditModeBtn.hide();
+/**
+ * Keeps map
+ */
+var map = {
+  longitudeContainer: null,
+  latitudeContainer: null,
+  originalPosition: null,
+  map: null,
+  marker: null,
   
-  $(".line > .right").editable({
-    defaultVal: "unknown",
-    editIcon: "/static/img/edit.png",
-    onCommit: function(oldData, newData) {
-      if (newData == "unknown")
-        $(this).addClass("none");
-      if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
-        return false;
-    }
-  });
+  updateLatLon: function(lat, lon) {
+    this.longitudeContainer.val(lon);
+    this.latitudeContainer.val(lat);
+  },
   
-  ui.saveDetailsBtn.show();
-  ui.cancelBtn.show();
-  ui.editModeLabel.show();
-}
+  editEnable: function() {
+    this.marker.setDraggable(true);
+  },
+  
+  editDisable: function() {
+    this.marker.setDraggable(false);
+  },
+  
+  editCancel: function() {
+    this.marker.setDraggable(false);
+    
+    var longitude = parseFloat(this.longitudeContainer.val());
+    var latitude = parseFloat(this.latitudeContainer.val());
+    
+    this.marker.setPosition(this.originalPosition);
+  },
+  
+  init: function() {
+    this.longitudeContainer = $("#longitude");
+    this.latitudeContainer = $("#latitude");
+    
+    var longitude = parseFloat(this.longitudeContainer.val());
+    var latitude = parseFloat(this.latitudeContainer.val());
+    this.originalPosition = new google.maps.LatLng(latitude, longitude);
+    
+    var options = {
+      center: new google.maps.LatLng(latitude, longitude),
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    
+    this.map = new google.maps.Map(document.getElementById("map-canvas"), options);
+    this.marker = new google.maps.Marker({
+      map: this.map,
+      draggable: false,
+      animation: google.maps.Animation.DROP,
+      position: this.originalPosition
+    });
+    
+    google.maps.event.addListener(this.marker, "position_changed", function() {
+      map.updateLatLon(map.marker.getPosition().lat(),
+                       map.marker.getPosition().lng());
+    });
+  }
+};
 
 $(document).ready(function() {
-  ui.setup();
-  ui.initGMaps();
-  
-  ui.enableEditModeBtn.click(function() {
-    ui.editDialog.dialog("open");
-  });
-  
-  ui.cancelBtn.click(function() {
-    $(this).hide();
-    ui.saveDetailsBtn.hide();
-    ui.editModeLabel.hide();
-    
-    $(".line > .right").editableCancel();
-    
-    ui.enableEditModeBtn.show();
-    
-  });
+  ui.init();
+  map.init();
 });

@@ -2,8 +2,8 @@
  * Keeps ui elements
  */
 var ui = {
-  buttonField: null,
-  enableEditModeBtn: null,
+  buttonField: null, // where buttons are placed
+  enableEditModeBtn: null, // initial button
   saveDetailsBtn: $("<input>"),
   cancelBtn: $("<input>"),
   editModeLabel: $("<span>"),
@@ -91,6 +91,15 @@ var ui = {
           ui.editDialog.dialog("close");
           ui.editEnable();
         })
+      )
+      .append($("<input>")
+        .attr("type", "button")
+        .css("margin-top", "15px")
+        .val("Cancel")
+        .addClass("red")
+        .click(function() {
+          ui.editDialog.dialog("close");
+        })
       );
     
     this.confirmDialog
@@ -132,7 +141,7 @@ var ui = {
       );
     
     this.saveDetailsBtn.click(function() { ui.confirmDialog.dialog("open"); });
-      
+    
     this.enableEditModeBtn.click(function() {
       ui.editDialog.dialog("open");
     });

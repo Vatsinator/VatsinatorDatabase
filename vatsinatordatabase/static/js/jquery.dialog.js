@@ -19,7 +19,8 @@
       position: "fixed",
       left: 0,
       top: 0,
-      "z-index": 1000
+      "z-index": 1000,
+      display: "none"
     });
   
   function prepare($object, $overlay, options) {
@@ -39,46 +40,62 @@
       });
   }
   
+  function hideAll($overlay) {
+    $overlay.children().each(function() { $(this).hide(); });
+    $overlay.hide();
+    $("body").data("jquery.dialog.js.dialog_opened", false);
+  }
+  
   /**
    * Plugin.
    */
   $.fn.dialog = function(action, myOpts) {
-    var options = $.extend({}, defaults, myOpts);
-    
-    if (action == undefined) {
-      console.log("jquery.dialog.js: action must be either \"open\" or \"close\"!");
+    if (!$.trim($(this).html())) {
+      console.log("jquery.dialog.js: $(this) is an empty object");
       return false;
     }
     
-    overlay.css("background", options.overlayBackground);
-    
     var body = $("body");
     
-    if (action == "open") {
-      if (body.data("dialog_opened") == true) {
-        console.log("jquery.dialog.js: dialog is already opened!");
-        return false;
-      }
-      
-      body.data("dialog_opened", true);
+    var exists = body.data("jquery.dialog.js.overlay_exists");
+    if (!exists) {
       body.append(overlay);
-      
-      prepare($(this), overlay, options);
-      $(this).appendTo(overlay);
-      $(this).show();
       
       $(document).keyup(function(e) {
         if (e.which == 27) {
-          overlay.detach();
-          body.data("dialog_opened", false);
+          hideAll(overlay);
         }
       });
       
+      body.data("jquery.dialog.js.overlay_exists", true);
+    }
+    
+    var options = $.extend({}, defaults, myOpts);
+    
+    overlay.css("background", options.overlayBackground);
+    
+    if (action == "open") {
+      if (body.data("jquery.dialog.js.dialog_opened") == true) {
+        hideAll(overlay);
+      }
+      
+      body.data("jquery.dialog.js.dialog_opened", true);
+      overlay.show();
+      
+      prepare($(this), overlay, options);
+      
+      var isInOverlay = $(this).data("jquery.dialog.js.is_in_overlay");
+      if (!isInOverlay) {
+        $(this).appendTo(overlay);
+        $(this).data("jquery.dialog.js.is_in_overlay", true);
+      }
+      
+      $(this).show();
+      
     } else if (action == "close") {
-      overlay.detach();
-      body.data("dialog_opened", false);
+      hideAll(overlay);
     } else {
-      console.log("jquery.dialog.js: action must be either \"open\" or \"close\"!");
+      console.log("jquery.dialog.js: action must be either \"open\" or \"close\"");
       return false;
     }
     

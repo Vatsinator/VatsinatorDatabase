@@ -42,7 +42,7 @@ var vd = {
    * @scope private
    */
   _initInputs: function() {
-    $("input[type=text][title!='']").each(function() {
+    $("input[type=text][title]").each(function() {
       $(this)
         .focus(function() {
           vd._toggleDefault($(this));

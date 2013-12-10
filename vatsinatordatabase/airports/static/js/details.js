@@ -1,17 +1,13 @@
 /**
- * Keeps ui elements
+ * Manages ui elements
  */
 var ui = {
-  buttonField: null, // where buttons are placed
-  enableEditModeBtn: null, // initial button
-  saveDetailsBtn: $("<input>"),
-  cancelBtn: $("<input>"),
-  editModeLabel: $("<span>"),
-  editDialog: $("<div>"),
-  confirmDialog: $("<div>"),
   
+  /**
+   * Enables the "edit" mode.
+   */
   editEnable : function() {
-    this.enableEditModeBtn.hide();
+    $("#enableEditModeBtn").hide();
     
     $(".line > .right").editable({
       defaultVal: "unknown",
@@ -23,131 +19,85 @@ var ui = {
           return false;
         }
     });
-  
-    this.saveDetailsBtn.show();
-    this.cancelBtn.show();
-    this.editModeLabel.show();
+    
+    $("#saveDetailsBtn").show();
+    $("#editCancelBtn").show();
+    
+    $("#editModeLabel").show();
     
     map.editEnable();
   },
   
+  /**
+   * Closes the "edit" mode.
+   */
   editCancel: function() {
-    this.cancelBtn.hide();
-    this.saveDetailsBtn.hide();
-    this.editModeLabel.hide();
+    $("#saveDetailsBtn").hide();
+    $("#editCancelBtn").hide();
+    
+    $("#editModeLabel").hide();
     
     $(".line > .right").editableCancel();
-    
-    this.enableEditModeBtn.show();
-    
+    $("#enableEditModeBtn").show();
     map.editCancel();
   },
   
+  /**
+   * Binds callbacks.
+   */
   init: function() {
-    this.buttonField = $("#buttonField");
-    this.enableEditModeBtn = $("#enableEditModeBtn");
-    
-    this.saveDetailsBtn
-      .attr("type", "button")
-      .val("Save details")
-      .addClass("cyan")
-      .hide()
-      .appendTo(ui.buttonField);
-    
-    this.cancelBtn
-      .attr("type", "button")
-      .val("Cancel")
-      .addClass("red")
-      .hide()
-      .appendTo(ui.buttonField);
-    
-    this.editModeLabel
-      .text("You may now edit this airport's details.")
-      .addClass("editModeLabel")
-      .hide()
-      .appendTo(ui.buttonField);
-    
-    this.editDialog
-      .append($("<p>")
-        .html("You are now about to enter the edit mode.")
-      )
-      .append($("<p>")
-        .css("font-size", "13px")
-        .html("In the edit mode, you can modify every attribute of this airport " +
-          "you want. Although, after you commit the changes, they need to be " +
-          "reviewed and acceppted by one of the moderators. You will be notified " +
-          "when your modifications are applied to the database.")
-      )
-      .append($("<p>")
-        .css("margin-bottom", "15px")
-        .html("Do you want to continue?")
-      )
-      .append($("<input>")
-        .attr("type", "button")
-        .css("margin-top", "15px")
-        .val("Continue")
-        .addClass("cyan")
-        .click(function() {
-          ui.editDialog.dialog("close");
-          ui.editEnable();
-        })
-      )
-      .append($("<input>")
-        .attr("type", "button")
-        .css("margin-top", "15px")
-        .val("Cancel")
-        .addClass("red")
-        .click(function() {
-          ui.editDialog.dialog("close");
-        })
-      );
-    
-    this.confirmDialog
-      .append($("<p>")
-        .html("Confirm")
-      )
-      .append($("<p>")
-        .css("font-size", "13px")
-        .html("Please confirm your changes by describing them briefly and giving us " +
-          "your e-mail address, so we can let you know when they are commited.")
-      )
-      .append($("<p>")
-        .html("Brief description: ")
-        .append($("<input>")
-          .attr("type", "text")
-        )
-      )
-      .append($("<p>")
-        .html("E-mail address: ")
-        .append($("<input>")
-          .attr("type", "text")
-        )  
-      )
-      .append($("<input>")
-        .attr("type", "button")
-        .css("margin-top", "15px")
-        .val("Confirm")
-        .addClass("cyan")
-        .click(function() {
-          $(this)
-            .val("Sending...")
-            .attr("disabled", "disabled");
-          
-          dataHandler.commit(function() {
-            ui.confirmDialog.dialog("close");
-            ui.editCancel();
-          });
-        })
-      );
-    
-    this.saveDetailsBtn.click(function() { ui.confirmDialog.dialog("open"); });
-    
-    this.enableEditModeBtn.click(function() {
-      ui.editDialog.dialog("open");
+    $("#enableEditModeBtn").click(function() {
+      $("#editDialog").dialog("open");
     });
     
-    this.cancelBtn.click(function() {
+    $("#editDialog #continueBtn").click(function() {
+      $("#editDialog").dialog("close");
+      ui.editEnable();
+    });
+    
+    $("#editDialog #cancelBtn").click(function() {
+      $("#editDialog").dialog("close");
+    });
+    
+    $("#editCancelBtn").click(function() {
       ui.editCancel();
+    });
+    
+    $("#saveDetailsBtn").click(function() {
+      $("#confirmDialog").dialog("open");
+    });
+    
+    $("#errorMsg #closeButton").click(function() {
+      $("#errorMsg").dialog("close");
+    });
+    
+    $("#confirmDialog #confirmBtn").click(function() {
+      $(this)
+        .val("Sending...")
+        .attr("disabled", "disabled");
+      
+      dataHandler.commit({
+          icao:         $("#details #icao").text(),
+          iata:         $("#details #iata").text(),
+          latitude:     $("#details #latitude").val(),
+          longitude:    $("#details #longitude").val(),
+          name:         $("#details #name").text(),
+          city:         $("#details #city").text(),
+          country:      $("#details #country").text(),
+          altitude:     $("#details #altitude").text(),
+          description:  $("#confirmDialog #descriptionText").val(),
+          email:        $("#confirmDialog #emailText").val()
+        }, function() {
+          $("#confirmDialog").dialog("close");
+          ui.editCancel();
+        }, function(msg) {
+          $("#confirmDialog").dialog("close");
+          ui.editCancel();
+          
+          $("#errorMsg").dialog("open");
+          $("#errorMsg #errorText").html(msg);
+        }
+      );
     });
   }
 };
@@ -214,8 +164,8 @@ var map = {
 };
 
 var dataHandler = {
-  commit: function(callback) {
-    setTimeout(function() { callback() }, 2000);
+  commit: function(values, success, error) {
+    setTimeout(function() { error("Not implemented") }, 2000);
   }
 };
 

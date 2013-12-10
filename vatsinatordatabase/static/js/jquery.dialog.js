@@ -65,6 +65,14 @@
       
       prepare($(this), overlay, options);
       $(this).appendTo(overlay);
+      $(this).show();
+      
+      $(document).keyup(function(e) {
+        if (e.which == 27) {
+          overlay.detach();
+          body.data("dialog_opened", false);
+        }
+      });
       
     } else if (action == "close") {
       overlay.detach();

@@ -67,6 +67,10 @@ var ui = {
       $("#confirmDialog").dialog("open");
     });
     
+    $("#successMsg #closeBtn").click(function() {
+      $("#successMsg").dialog("close");
+    });
+    
     $("#errorMsg #closeButton").click(function() {
       $("#errorMsg").dialog("close");
     });
@@ -77,6 +81,7 @@ var ui = {
         .attr("disabled", "disabled");
       
       dataHandler.commit({
+          id:           $("#details #id").val(),
           icao:         $("#details #icao").text(),
           iata:         $("#details #iata").text(),
           latitude:     $("#details #latitude").val(),
@@ -90,6 +95,8 @@ var ui = {
         }, function() {
           $("#confirmDialog").dialog("close");
           ui.editCancel();
+          
+          $("#successMsg").dialog("open");
         }, function(msg) {
           $("#confirmDialog").dialog("close");
           ui.editCancel();
@@ -164,8 +171,29 @@ var map = {
 };
 
 var dataHandler = {
+  success: function() {},
+  error: function() {},
+  
   commit: function(values, success, error) {
-    setTimeout(function() { error("Not implemented") }, 2000);
+    this.success = success;
+    this.error = error;
+    
+    $.ajax({
+      url: "/airports/save/",
+      type: "post",
+      data: values,
+      
+      error: function(jqXHR, textStatus, errorThrown) {
+        dataHandler.error(errorThrown);
+      },
+      
+      success: function(data) {
+        if (data.result == 1)
+          dataHandler.success();
+        else
+          dataHandler.error("Server error");
+      }
+    });
   }
 };
 

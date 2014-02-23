@@ -16,6 +16,7 @@
 <h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
 
 <p id="details">
+  <input type="hidden" id="id" value="{{ ap.id }}" />
   <input type="hidden" id="latitude" value="{{ ap.latitude }}" />
   <input type="hidden" id="longitude" value="{{ ap.longitude }}" />
 
@@ -91,6 +92,16 @@ e-mail address, so we can let you know when they are commited.
   <div class="left">E-mail address:</div><div class="right"><input type="text" id="emailText" /></div>
   <div class="spacer"></div>
   <input type="button" style="margin-top: 15px;" value="Confirm" class="cyan" id="confirmBtn" />
+</div>
+
+<div id="successMsg" style="display: none;">
+  <p>Thank you</p>
+  <p style="font-size: 13px;">
+Thank you for contributing to the Vatsinator project. Our moderators will have your
+commit reviewed soon, and you will be notified when your changes are merged with the
+database.
+  </p>
+  <input type="button" style="margin-top: 15px;" value="Close" class="cyan" id="closeBtn" />
 </div>
 
 <div id="errorMsg" style="display: none;">

@@ -1,8 +1,11 @@
+import json
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import HttpResponse
 
-from airports.models import Airport
-
+from airports.models import Airport, Commit, CommitData
 
 def index(request):
   ''' Default view, only the search input field '''
@@ -32,8 +35,33 @@ def search(request):
     'airport_list': airport_list,
   })
 
+@ensure_csrf_cookie
 def details(request, icao):
   ap = get_object_or_404(Airport, icao=icao)
   return render(request, 'airports/details.html', {
     'ap': ap,
   })
+
+def save(request):
+  result = 1
+  
+  if not 'id' in request.POST:
+    result = 0
+  else:
+    id = request.POST['id']
+    
+    airport = Airport.objects.get(pk=id)
+    commit = Commit.create(airport)
+    commit.email = request.POST['email']
+    commit.description = request.POST['description']
+    commit.save()
+    
+    fields = ["icao", "iata", "name", "city", "country", "latitude", "longitude", "altitude"]
+    for f in fields:
+      old = getattr(airport, f)
+      new = request.POST[f].strip()
+      if old != new:
+        data = CommitData.create(commit, f, old, new)
+        data.save()
+  
+  return HttpResponse(json.dumps({'result': result}), content_type="application/json")

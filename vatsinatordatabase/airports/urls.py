@@ -17,4 +17,9 @@ urlpatterns = patterns('',
     view  = details,
     name  = 'details'
   ,),
+  url(
+    regex = r'^save/?$',
+    view  = save,
+    name  = 'save'
+  ,)
 )

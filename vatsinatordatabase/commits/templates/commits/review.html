@@ -1,0 +1,21 @@
+{% extends "__base.html" %}
+{% load staticfiles %}
+
+{% block title %}Commit {{ commit.token }} &bull; VatsinatorDatabase{% endblock %}
+
+{% block content %}
+<h1>Commit {{ commit.token }}</h1>
+<p>
+  <strong>Timestamp:</strong> {{ commit.timestamp }}<br />
+  <strong>Sender email:</strong> {{ commit.email }}<br />
+  <strong>Description:</strong> {{ commit.description }}<br />
+  <strong>Object ({{ commit.content_type }}):</strong> {{ commit.content_object }}
+</p>
+<p>The following changes will be commited:<br />
+  <ul>
+{% for d in data %}
+    <li><strong>{{ d.field_name }}:</strong> {{ d.old_value }} -> {{ d.new_value }}</li>
+{% endfor %}
+</p>
+
+{% endblock %}

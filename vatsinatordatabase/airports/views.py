@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse
 
-from airports.models import Airport, Commit, CommitData
+from airports.models import Airport
+from commits.models import Commit, CommitData
 
 def index(request):
   ''' Default view, only the search input field '''

@@ -9,6 +9,8 @@ except NameError:
 
 sys.path.append(ROOT_DIR)
 
+DOMAIN_NAME = 'database.vatsinator.eu.org'
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -123,6 +125,7 @@ INSTALLED_APPS = (
   'django.contrib.staticfiles',
   
   'vatsinatordatabase.airports',
+  'vatsinatordatabase.commits'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -153,3 +156,9 @@ LOGGING = {
     },
   }
 }
+
+SERVER_EMAIL = 'notifications@vatsinator.eu.org'
+DEFAULT_FROM_EMAIL = 'notifications@vatsinator.eu.org'
+EMAIL_SUBJECT_PREFIX = '[VatsinatorDatabase] '
+
+from settings_smtp import *

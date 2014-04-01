@@ -3,7 +3,12 @@
 
 {% block title %}Commit {{ commit.token }} &bull; VatsinatorDatabase{% endblock %}
 
+{% block js %}
+  <script src="{% static "js/commit.js" %}" type="text/javascript"></script>
+{% endblock %}
+
 {% block content %}
+<input type="hidden" id="commitToken" value="{{ commit.token }}" />
 <h1>Commit {{ commit.token }}</h1>
 <p>
   <strong>Timestamp:</strong> {{ commit.timestamp }}<br />
@@ -17,5 +22,15 @@
     <li><strong>{{ d.field_name }}:</strong> {{ d.old_value }} -> {{ d.new_value }}</li>
 {% endfor %}
 </p>
+<p>
+<input type="button" class="cyan" value="Accept" id="commitAccept" />
+<input type="button" class="red" value="Reject" id="commitReject" />
+</p>
 
+{% endblock %}
+
+{% block bodyEnd %}
+<div id="commitDialog" style="display: none;">
+  <p>Merging changes with the database...</p>
+</div>
 {% endblock %}

@@ -55,7 +55,9 @@ def save(request):
     commit = Commit.create(airport)
     commit.email = request.POST['email']
     commit.description = request.POST['description']
+    commit.url = "/airports/details/" + airport.icao
     commit.save()
+    commit.notify()
     
     fields = ["icao", "iata", "name", "city", "country", "latitude", "longitude", "altitude"]
     for f in fields:

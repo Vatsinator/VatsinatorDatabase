@@ -9,4 +9,5 @@
 
 # This should be hidden
 db.cnf
+settings_smtp.py
 

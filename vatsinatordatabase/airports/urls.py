@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     name  = 'index'
   ,),
   url(
-    regex = r'^search/$',
+    regex = r'^search/?$',
     view  = search,
     name  = 'search'
   ,),

@@ -14,7 +14,8 @@
   <strong>Timestamp:</strong> {{ commit.timestamp }}<br />
   <strong>Sender email:</strong> {{ commit.email }}<br />
   <strong>Description:</strong> {{ commit.description }}<br />
-  <strong>Object ({{ commit.content_type }}):</strong> {{ commit.content_object }}
+  <strong>Object ({{ commit.content_type }}):</strong> {{ commit.content_object }}<br />
+  <strong>Status:</strong> {{ commit.status_nice }}
 </p>
 <p>The following changes will be commited:<br />
   <ul>
@@ -32,5 +33,9 @@
 {% block bodyEnd %}
 <div id="commitDialog" style="display: none;">
   <p>Merging changes with the database...</p>
+</div>
+
+<div id="rejectDialog" style="display: none;">
+  <p>Rejecting commit...</p>
 </div>
 {% endblock %}

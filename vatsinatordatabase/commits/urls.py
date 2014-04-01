@@ -8,6 +8,11 @@ urlpatterns = patterns('',
     name  = 'accept'
   ,),
   url(
+    regex = r'^reject/?$',
+    view  = reject,
+    name  = 'reject'
+  ,),
+  url(
     regex = r'(?P<token>.+)$',
     view  = review,
     name  = 'review'

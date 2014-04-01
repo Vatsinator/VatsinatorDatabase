@@ -24,3 +24,13 @@ def accept(request):
   commit.merge()
   
   return HttpResponse(json.dumps({'result': 1, 'url': commit.url}), content_type="application/json")
+
+def reject(request):
+  if not 'token' in request.POST:
+    return HttpResponse(json.dumps({'result': 0}), content_type="application/json")
+  
+  token = request.POST['token']
+  commit = Commit.objects.get(token=token)
+  commit.reject()
+  
+  return HttpResponse(json.dumps({'result': 1, 'url': commit.url}), content_type="application/json")

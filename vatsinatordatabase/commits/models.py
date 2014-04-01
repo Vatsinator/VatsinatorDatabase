@@ -53,6 +53,14 @@ Vatsinator Team' % (settings.DOMAIN_NAME, self.url)
     send_mail('Your commit to the VatsinatorDatabase has been accepted',
               mailContent, 'notifications@vatsinator.eu.org', [self.email])
   
+  def reject(self):
+    self.status = 'RE'
+    self.save()
+  
+  # get status in human-readable form
+  def status_nice(self):
+    return dict(Commit.COMMIT_STATUS_CHOICES)[self.status]
+  
   def __unicode__(self):
     return self.timestamp
   

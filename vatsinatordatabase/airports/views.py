@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponse
+from django.db.models import Q
 
 from airports.models import Airport
 from commits.models import Commit, CommitData
@@ -14,7 +15,7 @@ def index(request):
 
 def search(request):
   q = request.GET['q']
-  results = Airport.objects.filter(icao__istartswith=q)
+  results = Airport.objects.filter(Q(icao__istartswith=q) | Q(name__icontains=q))
   if len(results) == 0:
     return render(request, 'airports/search.html', {
       'q': q,

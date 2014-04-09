@@ -1,7 +1,7 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
 
-{% block title %}{{ ap.icao }} &bull; VatsinatorDatabase{% endblock %}
+{% block title %}{{ ap.icao }} {{ ap.name }}, {{ ap.city }} &bull; VatsinatorDatabase{% endblock %}
 
 {% block css %}
   <link rel="stylesheet" href="{% static "css/details.css" %}" type="text/css" />

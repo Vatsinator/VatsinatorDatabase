@@ -1,0 +1,11 @@
+'''
+90-local.conf.py
+'''
+
+SECRET_KEY = 'your-secret-key'
+
+EMAIL_HOST = 'smtp.example.com'
+EMAIL_HOST_USER = 'notifications@vatsinator.eu.org'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USE_TTL = True

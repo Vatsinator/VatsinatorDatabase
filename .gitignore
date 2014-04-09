@@ -7,7 +7,7 @@
 # Compiled python modules
 *.pyc
 
-# This should be hidden
-db.cnf
-settings_smtp.py
+# These files should be hidden
+settings/90-local.conf.py
+settings/db.cnf
 

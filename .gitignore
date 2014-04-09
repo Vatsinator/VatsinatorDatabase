@@ -8,6 +8,6 @@
 *.pyc
 
 # These files should be hidden
-settings/90-local.conf.py
-settings/db.cnf
+vatsinatordatabase/settings/90-local.conf.py
+vatsinatordatabase/settings/db.cnf
 

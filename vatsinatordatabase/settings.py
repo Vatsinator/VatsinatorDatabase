@@ -124,6 +124,7 @@ INSTALLED_APPS = (
   'django.contrib.messages',
   'django.contrib.staticfiles',
   
+  'vatsinatordatabase.airlines',
   'vatsinatordatabase.airports',
   'vatsinatordatabase.commits'
 )

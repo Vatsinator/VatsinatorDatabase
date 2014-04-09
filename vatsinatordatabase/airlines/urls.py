@@ -1,25 +1,20 @@
 from django.conf.urls import patterns, url
-from airports.views import *
+from airlines.views import *
 
 urlpatterns = patterns('',
   url(
     regex = r'^$',
     view  = index,
-    name  = 'airports.index'
+    name  = 'airlines.index'
   ,),
   url(
     regex = r'^search/?$',
     view  = search,
-    name  = 'airports.search'
+    name  = 'airlines.search'
   ,),
   url(
     regex = r'^details/(?P<icao>.+)$',
     view  = details,
-    name  = 'airports.details'
+    name  = 'airlines.details'
   ,),
-  url(
-    regex = r'^save/?$',
-    view  = save,
-    name  = 'airports.save'
-  ,)
 )

@@ -1,0 +1,9 @@
+{% extends "__base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ a.name }} &bull; VatsinatorDatabase{% endblock %}
+
+{% block content %}
+<h1>{{ a.name }}, {{ a.icao }}</h1>
+
+{% endblock %}

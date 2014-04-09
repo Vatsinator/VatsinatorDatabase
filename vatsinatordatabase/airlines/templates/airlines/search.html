@@ -1,0 +1,47 @@
+{% extends "__base.html" %}
+
+{% block title %}Airlines &bull; VatsinatorDatabase{% endblock %}
+
+{% block content %}
+<h1>Airline search</h1>
+
+{% if error_message %}
+  <p><span class="error_message">{{ error_message }}</span></p>
+{% endif %}
+
+<p>
+  <form action="{% url 'airlines.search' %}" method="get">
+    <input type="text" title="ICAO code or name" name="q"{% if q %} value="{{ q }}"{% endif %} />
+    <input type="submit" value="Search" class="cyan" />
+  </form>
+</p>
+
+{% if airline_list %}
+  <p><ul>
+  {% for a in airline_list %}
+    <li><a href="{% url 'airlines.details' a.icao %}">
+      {{ a.name }}, {{ a.icao }}
+    </a></li>
+  {% endfor %}
+  </ul></p>
+  
+  {% if q %}
+  <p class="paginating">
+    {% if airline_list.has_previous %}
+      <a href="?q={{ q }}&page={{ airline_list.previous_page_number }}" class="paginating prev">&laquo; Previous page</a>
+    {% endif %}
+    
+    {% if airline_list.has_next %}
+      <a href="?q={{ q }}&page={{ airline_list.next_page_number }}" class="paginating next">Next page &raquo;</a>
+    {% endif %}
+    
+    <span class="center">
+      Page <strong>{{ airline_list.number }}</strong> of <strong>{{ airline_list.paginator.num_pages }}</strong>
+    </span>
+  </p>
+  {% endif %}
+  
+{% endif %}
+
+{% endblock %}
+

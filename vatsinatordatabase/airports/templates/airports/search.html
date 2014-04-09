@@ -10,7 +10,7 @@
 {% endif %}
 
 <p>
-  <form action="{% url 'search' %}" method="get">
+  <form action="{% url 'airports.search' %}" method="get">
     <input type="text" title="ICAO code" name="q"{% if q %} value="{{ q }}"{% endif %} />
     <input type="submit" value="Search" class="cyan" />
   </form>
@@ -19,7 +19,7 @@
 {% if airport_list %}
   <p><ul>
   {% for ap in airport_list %}
-    <li><a href="{% url 'details' ap.icao %}">
+    <li><a href="{% url 'airports.details' ap.icao %}">
       {{ ap.icao }} {{ ap.name }}, {{ ap.city }}
     </a></li>
   {% endfor %}

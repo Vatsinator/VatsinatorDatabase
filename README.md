@@ -1,5 +1,3 @@
-![Vatsinator](http://vatsinator.eu.org/images/header.jpg)
+**VatsinatorDatabase** is an open database for airports and airlines.
 
-**VatsinatorDatabase** is an open database that Vatsinator syncs with.
-
-**Warning**: this is developer site of the database implementation only.
+The VatsinatorDatabase project was created to provide always updated and accurate data.

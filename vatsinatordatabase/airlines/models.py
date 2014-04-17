@@ -6,7 +6,7 @@ class Airline(models.Model):
   icao = models.CharField(max_length=3)
   country = models.CharField(max_length=255)
   website = models.URLField()
-  hasLogo = models.BooleanField()
+  logo = models.CharField(max_length=127)
   
   def __unicode__(self):
     return unicode("%s %s" % (self.icao, self.name))

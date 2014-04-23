@@ -1,3 +1,18 @@
+/**
+ * common.css
+ * 
+ * Author: Michał Garapich <michal@garapich.pl>
+ * License: GNU General Public License
+ * Version: 0.1 beta
+ * 
+ * ==[ TABLE OF CONTENTS ]==
+ *   1. GLOBAL
+ *   2. HEADER
+ *   3. BODY
+ */
+
+
+/* ==[ 1. GLOBAL ]== */
 * {
   margin: 0;
   padding: 0;
@@ -9,134 +24,6 @@ body {
   width: 100%;
 }
 
-#header {
-  width: 100%;
-  height: 80px;
-  background: #323232;
-  box-shadow: 0px 1px 10px #323232;
-}
-  
-  #header div {
-    width: 970px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-    #header div h1 {
-      padding: 24px 10px 10px 0px;
-      font-size: 22px;
-      float: left;
-    }
-  
-      #header div h1 a {
-        text-decoration: none;
-        font-weight: bold;
-        color: #ffffff;
-    }
-  
-      #header h1 .beta {
-        font-size: 12px;
-        font-weight: normal;
-        color: #28B0FF;
-      }
-    
-    #header div #menu {
-      float: right;
-      width: 150px;
-      padding: 50px 10px 10px 0;
-      font-size: 13px;
-      height: 20px;
-    }
-    
-    #header div #logo {
-      width: 60px;
-      height: 60px;
-      background: #323232 url("../../static/img/logo.png") no-repeat right top;
-      position: absolute;
-      left: -75px;
-      top: 10px;
-    }
-    
-#bodyWrapper {
-  width: 970px;
-  margin: 0 auto;
-  padding: 20px 5px 10px 5px;
-  
-  font-size: 14px;
-  font-weight: normal;
-}
-
-  #bodyWrapper h1 {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  #bodyWrapper p {
-    margin: 10px 0 0 0;
-  }
-  
-    #bodyWrapper p.paginating {
-      width: 100%;
-      margin: 0;
-    }
-    
-      #bodyWrapper p.paginating .prev {
-        float: left;
-      }
-      
-      #bodyWrapper p.paginating .next {
-        float: right;
-      }
-      
-      #bodyWrapper p.paginating .center {
-        margin: 0 auto;
-        width: 200px;
-        display: block;
-        text-align: center;
-      }
-  
-  #bodyWrapper p + h1 {
-    margin-top: 20px;
-  }
-  
-  #bodyWrapper p .error_message {
-    font-weight: bold;
-    color: #FF7171;
-  }
-  
-  #bodyWrapper #footer {
-    width: 100%;
-    margin: 30px 0 0 0;
-    text-align: right;
-    border-top: 1px solid #aaaaaa;
-    color: #323232;
-    font-size: 12px;
-    clear: both;
-  }
-  
-    #bodyWrapper #footer .copyright {
-      margin: 5px 5px 0 0;
-    }
-  
-a {
-  color: #2296D9;
-  text-decoration: none;
-}
-  
-  a:hover {
-    color: #23DBEB;
-  }
-  
-  a.paginating {
-    color: #4B4B4B;
-    font-weight: bold;
-    font-size: 12px;
-  }
-
-    a.paginating:hover {
-      color: #313131;
-    }
-  
 input {
   border-radius: 2px;
 }
@@ -204,7 +91,139 @@ ul {
 }
 
 ul li {
-  background: #ffffff url("../../static/img/list-style-image.png") no-repeat 0px 5px;
+  background: #ffffff url("/static/img/list-style-image.png") no-repeat 0px 5px;
   padding-left: 15px;
 }
+
+ 
+a {
+  color: #2296D9;
+  text-decoration: none;
+}
   
+  a:hover {
+    color: #23DBEB;
+  }
+  
+  a.paginating {
+    color: #4B4B4B;
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+    a.paginating:hover {
+      color: #313131;
+    }
+
+
+
+/* ==[ 2. HEADER ]== */
+#header {
+  width: 100%;
+  height: 80px;
+  background: #323232;
+  box-shadow: 0px 1px 10px #323232;
+}
+  
+  #header div {
+    width: 970px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+    #header div h1 {
+      padding: 24px 10px 10px 0px;
+      font-size: 1.5em;
+      float: left;
+    }
+  
+      #header div h1 a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #ffffff;
+    }
+  
+      #header h1 .beta {
+        font-size: 0.7em;
+        font-weight: normal;
+        color: #28B0FF;
+      }
+    
+    #header div #menu {
+      float: right;
+      width: 150px;
+      padding: 50px 10px 10px 0;
+      font-size: 0.8em;
+      height: 20px;
+    }
+    
+    #header div #logo {
+      width: 60px;
+      height: 60px;
+      background: #323232 url("/static/img/logo.png") no-repeat right top;
+      position: absolute;
+      left: -75px;
+      top: 10px;
+    }
+    
+/* ==[ 3. BODY ]== */
+#bodyWrapper {
+  width: 970px;
+  margin: 0 auto;
+  padding: 20px 5px 10px 5px;
+  
+  font-size: 0.9em;
+  font-weight: normal;
+}
+
+  #bodyWrapper h1 {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  
+  #bodyWrapper p {
+    margin: 10px 0 0 0;
+  }
+  
+    #bodyWrapper p.paginating {
+      width: 100%;
+      margin: 0;
+    }
+    
+      #bodyWrapper p.paginating .prev {
+        float: left;
+      }
+      
+      #bodyWrapper p.paginating .next {
+        float: right;
+      }
+      
+      #bodyWrapper p.paginating .center {
+        margin: 0 auto;
+        width: 200px;
+        display: block;
+        text-align: center;
+      }
+  
+  #bodyWrapper p + h1 {
+    margin-top: 20px;
+  }
+  
+  #bodyWrapper p .error_message {
+    font-weight: bold;
+    color: #FF7171;
+  }
+  
+  #bodyWrapper #footer {
+    width: 100%;
+    margin: 30px 0 0 0;
+    text-align: right;
+    border-top: 1px solid #aaaaaa;
+    color: #323232;
+    font-size: 0.75em;
+    clear: both;
+  }
+  
+    #bodyWrapper #footer .copyright {
+      margin: 5px 5px 0 0;
+    }

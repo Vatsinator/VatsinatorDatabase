@@ -4,9 +4,9 @@ import sys
 import glob
 
 try:
-  ROOT_DIR
+    ROOT_DIR
 except NameError:
-  ROOT_DIR = os.path.dirname(__file__)
+    ROOT_DIR = os.path.dirname(__file__)
 
 sys.path.append(ROOT_DIR)
 
@@ -15,4 +15,4 @@ conffiles = glob.glob(conf_files_path)
 conffiles.sort()
 
 for f in conffiles:
-  execfile(os.path.abspath(f))
+    execfile(os.path.abspath(f))

@@ -4,38 +4,38 @@
 {% block title %}Commit {{ commit.token }} &bull; VatsinatorDatabase{% endblock %}
 
 {% block js %}
-  <script src="{% static "js/commit.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/commit.js" %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
-<input type="hidden" id="commitToken" value="{{ commit.token }}" />
-<h1>Commit {{ commit.token }}</h1>
-<p>
-  <strong>Timestamp:</strong> {{ commit.timestamp }}<br />
-  <strong>Sender email:</strong> {{ commit.email }}<br />
-  <strong>Description:</strong> {{ commit.description }}<br />
-  <strong>Object ({{ commit.content_type }}):</strong> {{ commit.content_object }}<br />
-  <strong>Status:</strong> {{ commit.status_nice }}
-</p>
-<p>The following changes will be commited:<br />
-  <ul>
-{% for d in data %}
-    <li><strong>{{ d.field_name }}:</strong> {{ d.old_value }} -> {{ d.new_value }}</li>
-{% endfor %}
-</p>
-<p>
-<input type="button" class="cyan" value="Accept" id="commitAccept" />
-<input type="button" class="red" value="Reject" id="commitReject" />
-</p>
+    <input type="hidden" id="commitToken" value="{{ commit.token }}"/>
+    <h1>Commit {{ commit.token }}</h1>
+    <p>
+        <strong>Timestamp:</strong> {{ commit.timestamp }}<br/>
+        <strong>Sender email:</strong> {{ commit.email }}<br/>
+        <strong>Description:</strong> {{ commit.description }}<br/>
+        <strong>Object ({{ commit.content_type }}):</strong> {{ commit.content_object }}<br/>
+        <strong>Status:</strong> {{ commit.status_nice }}
+    </p>
+    <p>The following changes will be commited:<br/>
+    <ul>
+        {% for d in data %}
+            <li><strong>{{ d.field_name }}:</strong> {{ d.old_value }} -> {{ d.new_value }}</li>
+        {% endfor %}
+    </p>
+    <p>
+        <input type="button" class="cyan" value="Accept" id="commitAccept"/>
+        <input type="button" class="red" value="Reject" id="commitReject"/>
+    </p>
 
 {% endblock %}
 
 {% block bodyEnd %}
-<div id="commitDialog" style="display: none;">
-  <p>Merging changes with the database...</p>
-</div>
+    <div id="commitDialog" style="display: none;">
+        <p>Merging changes with the database...</p>
+    </div>
 
-<div id="rejectDialog" style="display: none;">
-  <p>Rejecting commit...</p>
-</div>
+    <div id="rejectDialog" style="display: none;">
+        <p>Rejecting commit...</p>
+    </div>
 {% endblock %}

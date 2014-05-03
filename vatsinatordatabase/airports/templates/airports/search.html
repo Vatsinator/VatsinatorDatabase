@@ -3,44 +3,47 @@
 {% block title %}Airports &bull; VatsinatorDatabase{% endblock %}
 
 {% block content %}
-<h1>Airport search</h1>
+    <h1>Airport search</h1>
 
-{% if error_message %}
-  <p><span class="error_message">{{ error_message }}</span></p>
-{% endif %}
-
-<p>
-  <form action="{% url 'airports.search' %}" method="get">
-    <input type="text" title="ICAO code" name="q"{% if q %} value="{{ q }}"{% endif %} />
-    <input type="submit" value="Search" class="cyan" />
-  </form>
-</p>
-
-{% if airport_list %}
-  <p><ul>
-  {% for ap in airport_list %}
-    <li><a href="{% url 'airports.details' ap.icao %}">
-      {{ ap.icao }} {{ ap.name }}, {{ ap.city }}
-    </a></li>
-  {% endfor %}
-  </ul></p>
-  
-  {% if q %}
-  <p class="paginating">
-    {% if airport_list.has_previous %}
-      <a href="?q={{ q }}&page={{ airport_list.previous_page_number }}" class="paginating prev">&laquo; Previous page</a>
+    {% if error_message %}
+        <p><span class="error_message">{{ error_message }}</span></p>
     {% endif %}
-    
-    {% if airport_list.has_next %}
-      <a href="?q={{ q }}&page={{ airport_list.next_page_number }}" class="paginating next">Next page &raquo;</a>
-    {% endif %}
-    
-    <span class="center">
+
+    <p>
+    <form action="{% url 'airports.search' %}" method="get">
+        <input type="text" title="ICAO code" name="q"{% if q %} value="{{ q }}"{% endif %} />
+        <input type="submit" value="Search" class="cyan"/>
+    </form>
+    </p>
+
+    {% if airport_list %}
+        <p>
+        <ul>
+            {% for ap in airport_list %}
+                <li><a href="{% url 'airports.details' ap.icao %}">
+                    {{ ap.icao }} {{ ap.name }}, {{ ap.city }}
+                </a></li>
+            {% endfor %}
+        </ul></p>
+
+        {% if q %}
+            <p class="paginating">
+                {% if airport_list.has_previous %}
+                    <a href="?q={{ q }}&page={{ airport_list.previous_page_number }}" class="paginating prev">&laquo;
+                        Previous page</a>
+                {% endif %}
+
+                {% if airport_list.has_next %}
+                    <a href="?q={{ q }}&page={{ airport_list.next_page_number }}" class="paginating next">Next
+                        page &raquo;</a>
+                {% endif %}
+
+                <span class="center">
       Page <strong>{{ airport_list.number }}</strong> of <strong>{{ airport_list.paginator.num_pages }}</strong>
     </span>
-  </p>
-  {% endif %}
-  
-{% endif %}
+            </p>
+        {% endif %}
+
+    {% endif %}
 
 {% endblock %}

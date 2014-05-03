@@ -1,6 +1,6 @@
-'''
+"""
 90-local.conf.py
-'''
+"""
 
 SECRET_KEY = 'your-secret-key'
 

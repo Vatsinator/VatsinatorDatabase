@@ -1,73 +1,73 @@
 span.line {
-  clear: both;
-  width: 400px;
-  display: block;
-  padding: 2px;
-  height: 18px;
+    clear: both;
+    width: 400px;
+    display: block;
+    padding: 2px;
+    height: 18px;
 }
 
-  span.line .left {
+span.line .left {
     margin-right: 10px;
     display: block;
     float: left;
     clear: left;
     width: 150px;
-  }
+}
 
-  span.line .right {
+span.line .right {
     font-weight: bold;
     display: block;
     float: left;
     margin-right: 5px;
     min-width: 10px;
-  }
-  
-  span.line .none {
+}
+
+span.line .none {
     color: #999999;
     font-weight: normal;
-  }
-  
+}
+
 #bodyWrapper input[type=text].inline {
-  padding: 0;
+    padding: 0;
 }
 
 span.editModeLabel {
-  float: right;
-  font-size: 13px;
-  color: #777777;
+    float: right;
+    font-size: 13px;
+    color: #777777;
 }
 
 p#details {
-  float: left;
+    float: left;
 }
 
 div#map-canvas {
-  float: right;
-  width: 500px;
-  height: 300px;
+    float: right;
+    width: 500px;
+    height: 300px;
 }
 
 div#confirmDialog div.left {
-  width: 30%;
-  float: left;
-  height: 30px;
-  text-align: right;
-  line-height: 30px;
+    width: 30%;
+    float: left;
+    height: 30px;
+    text-align: right;
+    line-height: 30px;
 }
 
 div#confirmDialog div.right {
-  width: 70%;
-  float: right;
-  height: 30px;
+    width: 70%;
+    float: right;
+    height: 30px;
 }
 
 div#confirmDialog div.spacer {
-  width: 100%;
-  clear: both;
-  height: 10px;
+    width: 100%;
+    clear: both;
+    height: 10px;
 }
 
 div#errorMsg #errorText {
-  font-weight: bold;
-  color: #FF7171;
+    font-weight: bold;
+    color: #FF7171;
 }

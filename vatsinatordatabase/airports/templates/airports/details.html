@@ -4,21 +4,21 @@
 {% block title %}{{ ap.icao }} {{ ap.name }}, {{ ap.city }} &bull; VatsinatorDatabase{% endblock %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static "css/details.css" %}" type="text/css" />
+    <link rel="stylesheet" href="{% static "css/details.css" %}" type="text/css"/>
 {% endblock %}
 
 {% block js %}
-  <script src="{% static "js/details.js" %}" type="text/javascript"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd169CLoI22Vbm64nYB9i4Wzc0cvroXfI&sensor=false"></script>
+    <script src="{% static "js/details.js" %}" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd169CLoI22Vbm64nYB9i4Wzc0cvroXfI&sensor=false"></script>
 {% endblock %}
 
 {% block content %}
-<h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
+    <h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
 
-<p id="details">
-  <input type="hidden" id="id" value="{{ ap.id }}" />
-  <input type="hidden" id="latitude" value="{{ ap.latitude }}" />
-  <input type="hidden" id="longitude" value="{{ ap.longitude }}" />
+    <p id="details">
+        <input type="hidden" id="id" value="{{ ap.id }}"/>
+        <input type="hidden" id="latitude" value="{{ ap.latitude }}"/>
+        <input type="hidden" id="longitude" value="{{ ap.longitude }}"/>
 
   <span class="line">
     <span class="left">ICAO code:</span>
@@ -53,61 +53,71 @@
     <span class="left">Altitude (feet):</span>
     <span class="right" id="altitude">{{ ap.altitude }}</span>
   </span>
-  
-</p>
-<div id="map-canvas"></div>
-<p style="height: 20px; clear:both;"></p>
-<p id="buttonField">
-  <input type="button" id="enableEditModeBtn" value="Edit" class="cyan" />
-  <input type="button" id="saveDetailsBtn" value="Save details" class="cyan" style="display: none;" />
-  <input type="button" id="editCancelBtn" value="Cancel" class="red" style="display: none;" />
-  
-  <span class="editModeLabel" id="editModeLabel" style="display: none;">You may now edit this airport's details.</span>
-</p>
+
+    </p>
+    <div id="map-canvas"></div>
+    <p style="height: 20px; clear:both;"></p>
+    <p id="buttonField">
+        <input type="button" id="enableEditModeBtn" value="Edit" class="cyan"/>
+        <input type="button" id="saveDetailsBtn" value="Save details" class="cyan" style="display: none;"/>
+        <input type="button" id="editCancelBtn" value="Cancel" class="red" style="display: none;"/>
+
+        <span class="editModeLabel" id="editModeLabel"
+              style="display: none;">You may now edit this airport's details.</span>
+    </p>
 {% endblock %}
 
 {% block bodyEnd %}
-<div id="editDialog" style="display: none;">
-  <p>You are now about to enter the edit mode.</p>
-  <p style="font-size: 13px;">
-In the edit mode, you can modify every attribute of this airport you want.
-Although, after you commit the changes, they need to be reviewed and acceppted
-by one of our moderators. You will be notified when your modifications are
-applied to the database.
-  </p>
-  <p style="margin-botton: 15px;">Do you want to continue?</p>
-  <input type="button" style="margin-top: 15px;" value="Continue" class="cyan" id="continueBtn" />
-  <input type="button" style="margin-top: 15px;" value="Cancel" class="red" id="cancelBtn" />
-</div>
+    <div id="editDialog" style="display: none;">
+        <p>You are now about to enter the edit mode.</p>
 
-<div id="confirmDialog" style="display: none;">
-  <p>Confirm</p>
-  <p style="font-size: 13px;">
-Please configurm your changes by describing them briefly and giving us your
-e-mail address, so we can let you know when they are commited.
-  </p>
-  <div class="spacer"></div>
-  <div class="left">Brief description:</div><div class="right"><input type="text" id="descriptionText" /></div>
-  <div class="spacer"></div>
-  <div class="left">E-mail address:</div><div class="right"><input type="text" id="emailText" /></div>
-  <div class="spacer"></div>
-  <input type="button" style="margin-top: 15px;" value="Confirm" class="cyan" id="confirmBtn" />
-</div>
+        <p style="font-size: 13px;">
+            In the edit mode, you can modify every attribute of this airport you want.
+            Although, after you commit the changes, they need to be reviewed and acceppted
+            by one of our moderators. You will be notified when your modifications are
+            applied to the database.
+        </p>
 
-<div id="successMsg" style="display: none;">
-  <p>Thank you</p>
-  <p style="font-size: 13px;">
-Thank you for contributing to the Vatsinator project. Our moderators will have your
-commit reviewed soon, and you will be notified when your changes are merged with the
-database.
-  </p>
-  <input type="button" style="margin-top: 15px;" value="Close" class="cyan" id="closeBtn" />
-</div>
+        <p style="margin-botton: 15px;">Do you want to continue?</p>
+        <input type="button" style="margin-top: 15px;" value="Continue" class="cyan" id="continueBtn"/>
+        <input type="button" style="margin-top: 15px;" value="Cancel" class="red" id="cancelBtn"/>
+    </div>
 
-<div id="errorMsg" style="display: none;">
-  <p>Error</p>
-  <p>We are sorry, but an error occured during executing this operation. Please try again later.</p>
-  <p id="errorText"></p>
-  <input type="button" style="margin-top: 15px;" value="Close" class="red" id="closeButton" />
-</div>
+    <div id="confirmDialog" style="display: none;">
+        <p>Confirm</p>
+
+        <p style="font-size: 13px;">
+            Please configurm your changes by describing them briefly and giving us your
+            e-mail address, so we can let you know when they are commited.
+        </p>
+
+        <div class="spacer"></div>
+        <div class="left">Brief description:</div>
+        <div class="right"><input type="text" id="descriptionText"/></div>
+        <div class="spacer"></div>
+        <div class="left">E-mail address:</div>
+        <div class="right"><input type="text" id="emailText"/></div>
+        <div class="spacer"></div>
+        <input type="button" style="margin-top: 15px;" value="Confirm" class="cyan" id="confirmBtn"/>
+    </div>
+
+    <div id="successMsg" style="display: none;">
+        <p>Thank you</p>
+
+        <p style="font-size: 13px;">
+            Thank you for contributing to the Vatsinator project. Our moderators will have your
+            commit reviewed soon, and you will be notified when your changes are merged with the
+            database.
+        </p>
+        <input type="button" style="margin-top: 15px;" value="Close" class="cyan" id="closeBtn"/>
+    </div>
+
+    <div id="errorMsg" style="display: none;">
+        <p>Error</p>
+
+        <p>We are sorry, but an error occured during executing this operation. Please try again later.</p>
+
+        <p id="errorText"></p>
+        <input type="button" style="margin-top: 15px;" value="Close" class="red" id="closeButton"/>
+    </div>
 {% endblock %}

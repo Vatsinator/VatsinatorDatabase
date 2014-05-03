@@ -1,6 +1,6 @@
-'''
+"""
 10-core.conf.py
-'''
+"""
 
 # Base URL of the project instance
 DOMAIN_NAME = 'database.vatsinator.eu.org'
@@ -13,10 +13,10 @@ ALLOWED_HOSTS = []
 SITE_ID = 1
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'OPTIONS' : {
-      'read_default_file': os.path.join(os.path.dirname(__file__), 'settings', 'db.cnf'),
-    },
-  }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': os.path.join(os.path.dirname(__file__), 'settings', 'db.cnf'),
+        },
+    }
 }

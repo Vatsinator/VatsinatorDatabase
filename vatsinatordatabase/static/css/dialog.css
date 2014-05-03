@@ -1,11 +1,11 @@
 .dialog {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 3px;
-  box-shadow: 3px 3px 3px #000000;
-  text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 3px #000000;
+    text-align: center;
 }
 
-  .dialog p {
+.dialog p {
     margin: 5px 0px;
-  }
+}

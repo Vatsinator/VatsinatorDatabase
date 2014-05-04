@@ -9,7 +9,7 @@ var ui = {
     editEnable: function () {
         $("#enableEditModeBtn").hide();
 
-        $(".line > .right").editable({
+        $(".line > .editable").editable({
             defaultVal: "unknown",
             editIcon: "/static/img/edit.png",
             onCommit: function (oldData, newData) {
@@ -81,7 +81,6 @@ var ui = {
                 .attr("disabled", "disabled");
 
             dataHandler.commit({
-                    id: $("#details #id").val(),
                     icao: $("#details #icao").text(),
                     iata: $("#details #iata").text(),
                     latitude: $("#details #latitude").val(),
@@ -171,17 +170,19 @@ var map = {
 };
 
 var dataHandler = {
-    success: function () {
+    success: function (reason) {
     },
-    error: function () {
+    error: function (reason) {
     },
 
     commit: function (values, success, error) {
         this.success = success;
         this.error = error;
 
+        var icao = values.icao;
+
         $.ajax({
-            url: "/airports/save/",
+            url: "/airports/save/" + icao,
             type: "post",
             data: values,
 

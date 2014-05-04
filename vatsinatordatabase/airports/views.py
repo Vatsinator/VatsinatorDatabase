@@ -59,7 +59,7 @@ def details(request, icao):
 
     Args:
         request: the request.
-        icao: The airport ICAO code.
+        icao: the airport ICAO code.
     """
     ap = get_object_or_404(Airport, icao=icao)
     return render(request, 'airports/details.html', {
@@ -67,18 +67,17 @@ def details(request, icao):
     })
 
 
-def save(request):
+def save(request, icao):
     """
     Ajax view.
 
     Args:
         request: the request.
+        icao: the airport ICAO code.
     """
 
     try:
-        id = request.POST['id']
-
-        airport = Airport.objects.get(pk=id)
+        airport = Airport.objects.get(icao=icao)
         commit = Commit.create(airport)
         commit.email = request.POST['email']
         commit.description = request.POST['description']
@@ -86,9 +85,9 @@ def save(request):
         commit.save()
         commit.notify()
 
-        fields = ['icao', 'iata', 'name', 'city', 'country', 'latitude', 'longitude', 'altitude']
+        fields = ['iata', 'name', 'city', 'country', 'latitude', 'longitude', 'altitude']
         for f in fields:
-            old = getattr(airport, f)
+            old = unicode(getattr(airport, f))
             new = request.POST[f].strip()
             if old != new:
                 data = CommitData.create(commit, f, old, new)

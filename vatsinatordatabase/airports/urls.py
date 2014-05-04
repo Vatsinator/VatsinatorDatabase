@@ -20,7 +20,7 @@ urlpatterns = patterns('',
                            name='airports.details'
                            , ),
                        url(
-                           regex=r'^save/?$',
+                           regex=r'^save/(?P<icao>.+)$',
                            view=save,
                            name='airports.save'
                            , )

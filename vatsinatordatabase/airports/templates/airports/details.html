@@ -16,7 +16,6 @@
     <h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
 
     <p id="details">
-        <input type="hidden" id="id" value="{{ ap.id }}"/>
         <input type="hidden" id="latitude" value="{{ ap.latitude }}"/>
         <input type="hidden" id="longitude" value="{{ ap.longitude }}"/>
 
@@ -27,31 +26,31 @@
   
   <span class="line">
     <span class="left">IATA code:</span>
-    <span class="right" id="iata">
+    <span class="right editable" id="iata">
       {{ ap.iata|default:"<span class=\"none\">unknown</span>" }}
     </span>
   </span>
   
   <span class="line">
     <span class="left">Name:</span>
-    <span class="right" id="name">{{ ap.name }}</span>
+    <span class="right editable" id="name">{{ ap.name }}</span>
   </span>
   
   <span class="line">
     <span class="left">City:</span>
-    <span class="right" id="city">
+    <span class="right editable" id="city">
       {{ ap.city|default:"<span class=\"none\">unknown</span>" }}
     </span>
   </span>
   
   <span class="line">
     <span class="left">Country:</span>
-    <span class="right" id="country">{{ ap.country }}</span>
+    <span class="right editable" id="country">{{ ap.country }}</span>
   </span>
   
   <span class="line">
     <span class="left">Altitude (feet):</span>
-    <span class="right" id="altitude">{{ ap.altitude }}</span>
+    <span class="right editable" id="altitude">{{ ap.altitude }}</span>
   </span>
 
     </p>
@@ -87,7 +86,7 @@
         <p>Confirm</p>
 
         <p style="font-size: 13px;">
-            Please configurm your changes by describing them briefly and giving us your
+            Please confirm your changes by describing them briefly and giving us your
             e-mail address, so we can let you know when they are commited.
         </p>
 

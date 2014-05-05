@@ -3,6 +3,59 @@
 
 {% block title %}{{ a.name }} &bull; VatsinatorDatabase{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/details.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/airlines.css" %}" type="text/css"/>
+{% endblock %}
+
 {% block content %}
     <h1>{{ a.name }}, {{ a.icao }}</h1>
+
+    <p id="details">
+        <span class="line">
+            <span class="left">ICAO code:</span>
+            <span class="right" id="icao">{{ a.icao }}</span>
+        </span>
+
+        <span class="line">
+            <span class="left">Name:</span>
+            <span class="right editable" id="name">
+                {{ a.name|default:"<span class=\"none\">unknown</span>" }}
+            </span>
+        </span>
+
+        <span class="line">
+            <span class="left">Country:</span>
+            <span class="right editable" id="country">
+                {{ a.country|default:"<span class=\"none\">unknown</span>" }}
+            </span>
+        </span>
+
+        <span class="line">
+            <span class="left">Website:</span>
+            <span class="right editable" id="website">
+                {{ a.website|default:"<span class=\"none\">unknown</span>" }}
+            </span>
+        </span>
+
+        <span class="left">Logo:</span>
+        <span class="right" id="logo">
+            {% if a.logo %}
+                <img src="http://repo.vatsinator.eu.org/airline-logos/{{ a.logo }}" class="airline-logo"/>
+            {% endif %}
+         </span>
+    </p>
+    <p style="height: 20px; clear:both;"></p>
+    <p id="buttonField">
+        <input type="button" id="enableEditModeBtn" value="Edit" class="cyan"/>
+        <input type="button" id="saveDetailsBtn" value="Save details" class="cyan" style="display: none;"/>
+        <input type="button" id="editCancelBtn" value="Cancel" class="red" style="display: none;"/>
+
+        <span class="editModeLabel" id="editModeLabel"
+              style="display: none;">You may now edit this airport's details.</span>
+    </p>
+{% endblock %}
+
+{% block bodyEnd %}
+    {% include "__editDetails.html" %}
 {% endblock %}

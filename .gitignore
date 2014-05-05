@@ -11,3 +11,6 @@
 vatsinatordatabase/settings/90-local.conf.py
 vatsinatordatabase/settings/db.cnf
 
+# pycharm
+.idea
+

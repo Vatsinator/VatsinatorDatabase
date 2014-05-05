@@ -1,4 +1,4 @@
-/*
+/**
  * This is simple plugin to make desired fields editable.
  */
 (function ($) {

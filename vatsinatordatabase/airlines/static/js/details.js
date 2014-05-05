@@ -15,7 +15,7 @@ var ui = {
             onCommit: function (oldData, newData) {
                 if (newData == "unknown")
                     $(this).addClass("none");
-                if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
+                if ($(this).attr("id") == "iata" && newData.length != 3)
                     return false;
             }
         });
@@ -24,8 +24,6 @@ var ui = {
         $("#editCancelBtn").show();
 
         $("#editModeLabel").show();
-
-        map.editEnable();
     },
 
     /**
@@ -39,7 +37,6 @@ var ui = {
 
         $(".line > .right").editableCancel();
         $("#enableEditModeBtn").show();
-        map.editCancel();
     },
 
     /**
@@ -204,5 +201,4 @@ var dataHandler = {
 
 $(document).ready(function () {
     ui.init();
-    map.init();
 });

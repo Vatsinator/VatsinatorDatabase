@@ -1,32 +1,32 @@
 /**
- * The singleton class that handles the client side of the application.
+ * VatsinatorDatabase Module
  */
-var vd = {
-    csrftoken: $.cookie('csrftoken'),
+
+var vdModule = (function () {
+    var csrftoken = $.cookie('csrftoken');
 
     /**
-     * Handles input[type=text]s.
-     * @param object jQuery object.
-     * @scope private
+     * Handles inputs of type text.
+     * @param $object The jQuery input object.
      */
-    _toggleDefault: function (object) {
-        if ($.trim(object.val()) == "") {
-            object
+    var toggleDefault = function ($object) {
+        if ($.trim($object.val()) == "") {
+            $object
                 .val($(this).attr("title"))
                 .addClass("default");
-        } else if (object.val() == object.attr("title")) {
-            object
+        } else if ($object.val() == $object.attr("title")) {
+            $object
                 .removeClass("default")
                 .val("");
         }
-    },
+    };
 
     /**
      * Initializes the drop-down menu on the top bar.
-     * @scope private
+     * @param $object The jQuery menu object.
      */
-    _initMenu: function () {
-        $("ul.menu_top li").hover(function () {
+    var initMenu = function ($object) {
+        $object.hover(function () {
             $(this).parent().find("ul.menu_sub").stop(true, true);
             $(this).children("ul.menu_sub").slideDown("fast");
             $(this).children("a").addClass("hover");
@@ -35,20 +35,19 @@ var vd = {
             $(this).children("ul.menu_sub").slideUp("fast");
             $(this).children("a").removeClass("hover");
         });
-    },
+    };
 
     /**
-     * Initializes the text fields.
-     * @scope private
+     * Initializes the dynamic elements of the webpage.
      */
-    _initInputs: function () {
+    var initElements = function () {
         $("input[type=text][title]").each(function () {
             $(this)
                 .focus(function () {
-                    vd._toggleDefault($(this));
+                    toggleDefault($(this));
                 })
                 .blur(function () {
-                    vd._toggleDefault($(this));
+                    toggleDefault($(this));
                 });
 
             if ($(this).val() == "") {
@@ -57,46 +56,54 @@ var vd = {
                     .addClass("default");
             }
         });
-    },
+    };
 
-    _csrfSafeMethod: function (method) {
-        // these HTTP methods do not require CSRF protection
+    /**
+     * Tests if the given HTTP method require CSRF protection.
+     * @param method The HTTP method to be tested.
+     * @returns {boolean} True if the given HTTP method does not require protection.
+     */
+    var csrfSafeMethod = function (method) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    },
+    };
 
-    _sameOrigin: function (url) {
-        // test that a given url is a same-origin URL
-        // url could be relative or scheme relative or absolute
+    /**
+     * Tests that a given url is a same-origin URL.
+     * URL could be relative, scheme relative or absolute.
+     * @param url The url to be tested.
+     */
+    var isSameOrigin = function (url) {
         var host = document.location.host; // host + port
         var protocol = document.location.protocol;
         var sr_origin = '//' + host;
         var origin = protocol + sr_origin;
+
         // Allow absolute or scheme relative URLs to same origin
         return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
             (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
-            // or any other URL that isn't scheme relative or absolute i.e relative.
+            // or any other URL that isn't scheme relative or absolute i.e. relative.
             !(/^(\/\/|http:|https:).*/.test(url));
-    },
+    };
 
     /**
-     * Django's csrftoken ajax security
+     * Initializes the VatsinatorDatabase web-application.
      */
-    _initAjax: function () {
+    var init = function () {
+        initMenu($("ul.menu_top li"));
+        initElements();
+
+        // ensure that AJAX queries provide valid csrf token
         $.ajaxSetup({
             beforeSend: function (xhr, settings) {
-                if (!vd._csrfSafeMethod(settings.type) && vd._sameOrigin(settings.url))
-                    xhr.setRequestHeader("X-CSRFToken", vd.csrftoken);
+                if (!csrfSafeMethod(settings.type) && isSameOrigin(settings.url))
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
             }
         });
-    },
+    };
 
-    /**
-     * Initializes the application.
-     * @scope public
-     */
-    init: function () {
-        this._initMenu();
-        this._initInputs();
-        this._initAjax();
+
+    // public scope
+    return {
+        init: init
     }
-};
+}());

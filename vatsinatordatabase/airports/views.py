@@ -1,10 +1,9 @@
-import json
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponse
+from django.views.decorators.http import require_POST
 from django.db.models import Q
+from annoying.decorators import ajax_request
 
 from vatsinatordatabase.commits.models import Commit, CommitData
 
@@ -67,6 +66,8 @@ def details(request, icao):
     })
 
 
+@require_POST
+@ajax_request
 def save(request, icao):
     """
     Ajax view.
@@ -93,15 +94,6 @@ def save(request, icao):
                 data = CommitData.create(commit, f, old, new)
                 data.save()
 
-        return HttpResponse(json.dumps(
-            {
-                'result': 1
-            }
-        ), content_type='application/json')
+        return {'result': 1}
     except KeyError:
-        return HttpResponse(json.dumps(
-            {
-                'result': 0,
-                'reason': 'Invalid request'
-            }
-        ), content_type='application/json')
+        return {'result': 0, 'reason': 'Invalid request'}

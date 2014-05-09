@@ -47,26 +47,6 @@ div#map-canvas {
     height: 300px;
 }
 
-div#confirmDialog div.left {
-    width: 30%;
-    float: left;
-    height: 30px;
-    text-align: right;
-    line-height: 30px;
-}
-
-div#confirmDialog div.right {
-    width: 70%;
-    float: right;
-    height: 30px;
-}
-
-div#confirmDialog div.spacer {
-    width: 100%;
-    clear: both;
-    height: 10px;
-}
-
 div#errorMsg #errorText {
     font-weight: bold;
     color: #FF7171;

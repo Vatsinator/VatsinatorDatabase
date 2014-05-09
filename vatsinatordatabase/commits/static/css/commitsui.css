@@ -1,0 +1,51 @@
+div.editDialog p.content {
+    font-size: 13px;
+}
+
+div.editDialog p.question {
+    margin-bottom: 15px;
+}
+
+div.editDialog input[type=button] {
+    margin-top: 15px;
+}
+
+div.confirmDialog p.content {
+    font-size: 13px;
+}
+
+div.confirmDialog div.left {
+    width: 30%;
+    float: left;
+    height: 30px;
+    text-align: right;
+    line-height: 30px;
+}
+
+div.confirmDialog div.right {
+    width: 70%;
+    float: right;
+    height: 30px;
+}
+
+div.confirmDialog div.spacer {
+    width: 100%;
+    clear: both;
+    height: 10px;
+}
+
+div.successDialog p.content {
+    font-size: 13px;
+}
+
+div.successDialog input[type=button] {
+    margin-top: 60px;
+}
+
+div.errorDialog p.content {
+    font-size: 13px;
+}
+
+div.errorDialog input[type=button] {
+    margin-top: 65px;
+}

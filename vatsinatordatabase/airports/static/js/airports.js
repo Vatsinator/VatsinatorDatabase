@@ -2,84 +2,233 @@
  * Airports module.
  */
 
-//=require jquery.dialog.js
+//=require commits.js
+//=require jquery.editable.js
 var airports = (function () {
 
-    var ui = (function () {
-
-        var enableEditModeButton, saveDetailsButton, editCancelButton,
-            editModelLabel, editables,
-            confirmDialog, confirmDialogConfirmButton,
-            editDialog, editDialogContinueButton, editDialogCancelButton,
-            successDialog, successDialogCloseButton,
-            errorDialog, errorDialogCloseButton;
+    /**
+     * Manages the map.
+     */
+    //=require google.maps
+    var map = (function() {
+        /* ID of the map container */
+        var canvasId = "map-canvas";
+        var $longitude, $latitude, originalPosition, map, marker;
 
         /**
-         * Gathers all ui elements.
+         * Obtains longitude of the current position of the marker. Map must be initialized, otherwise this method
+         * will return null.
+         * @returns {*} Marker longitude.
          */
-        var init = function () {
-            enableEditModeButton = $("#enableEditModeButton");
-            saveDetailsButton = $("#saveDetailsButton");
-            editCancelButton = $("#editCancelButton");
-            editModelLabel = $("#editModeLabel");
-            editables = $(".line > .editable");
-            confirmDialog = $("#confirmDialog");
-            confirmDialogConfirmButton = confirmDialog.children(".confirmButton");
-            editDialog = $("#editDialog");
-            editDialogContinueButton = editDialog.children(".continueButton");
-            editDialogCancelButton = editDialog.children(".cancelButton");
-            successDialog = $("#successMsg");
-            successDialogCloseButton = successDialog.children(".closeButton");
-            errorDialog = $("#errorMsg");
-            errorDialogCloseButton = errorDialog.children(".closeButton");
-
-            bindCallbacks();
+        var longitude = function() {
+            if ($longitude === undefined) {
+                console.error("airports.map: map not initialized yet");
+                return null;
+            } else {
+                return parseFloat($longitude.val());
+            }
         };
 
         /**
-         * Defines ui behaviour.
+         * Obtains latitude of the current position of the marker. Map must be initialized, otherwise this method
+         * will return null.
+         * @returns {*} Marker latitude.
          */
-        var bindCallbacks = function () {
-            enableEditModeButton.click(function () {
-                editDialog.dialog("ooen");
-            });
-            editDialogContinueButton.click(function() {
-                editDialog.dialog("close");
-                enableEdit();
-            });
-            editDialogCancelButton.click(function() {
-                editDialog.dialog("close");
-            });
-            editCancelButton.click(function() {
-                disableEdit();
-            });
-            saveDetailsButton.click(function() {
-                confirmDialog.dialog("open");
-            });
-            successDialogCloseButton.click(function() {
-                successDialog.dialog("close");
-            });
-            errorDialogCloseButton.click(function() {
-                errorDialog.dialog("close");
-            });
-            confirmDialogConfirmButton.click(function() {
-                $(this)
-                    .val("Processing...")
-                    .attr("disabled", "disabled");
+        var latitude = function() {
+            if ($latitude === undefined) {
+                console.error("airports.map: map not initialized yet");
+                return null;
+            } else {
+                return parseFloat($latitude.val());
+            }
+        };
 
-                // TODO DataHandler
+        /**
+         * Updates the position (i.e. after user moves the marker).
+         * @param lat The new latitude.
+         * @param lon The new longitude.
+         */
+        var updatePosition = function(lat, lon) {
+            $latitude.val(lat);
+            $longitude.val(lon);
+        };
+
+        /**
+         * Enables the marker to be moved by user.
+         */
+        var enable = function() {
+            marker.setDraggable(true);
+        };
+
+        /**
+         * Disables the marker, so it cannot be moved.
+         */
+        var disable = function() {
+            marker.setDraggable(false);
+        };
+
+        /**
+         * Restores the original position of the marker.
+         */
+        var reset = function() {
+            marker.setPosition(originalPosition);
+        };
+
+        var init = function() {
+            $longitude = $("#longitude");
+            $latitude = $("#latitude");
+
+            originalPosition = new google.maps.LatLng(latitude(), longitude());
+
+            map = new google.maps.Map(document.getElementById(canvasId), {
+                center: new google.maps.LatLng(latitude(), longitude()),
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            marker = new google.maps.Marker({
+                map: map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                position: originalPosition
+            });
+
+            google.maps.event.addListener(marker, "position_changed", function() {
+                updatePosition(marker.getPosition().lat(), marker.getPosition().lng());
             });
         };
 
-        var enableEdit = function() {
-
-        };
-
-        var disableEdit = function(){
-
+        // public scope
+        return {
+            longitude: longitude,
+            latitude: latitude,
+            enable: enable,
+            disable: disable,
+            reset: reset,
+            init: init
         };
 
     }());
 
+    var $editButton, $saveButton, $cancelButton, $fields;
+
+    /**
+     * Enables the edit mode.
+     */
+    var editEnable = function() {
+        $editButton.hide();
+
+        $fields.editable({
+            defaultVal: "unknown",
+            editIcon: "/static/img/edit.png",
+            onCommit: function(oldData, newData) {
+                if (newData == "unknown")
+                    $(this).addClass("none");
+                if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
+                    return false;
+            }
+        });
+
+        map.enable();
+
+        $saveButton.show();
+        $cancelButton.show();
+    };
+
+    /**
+     * Disables the edit mode.
+     */
+    var editDisable = function() {
+        $saveButton.hide();
+        $cancelButton.hide();
+
+        $fields.editableCancel();
+        map.disable();
+
+        $editButton.show();
+    };
+
+    /**
+     * Prepares data required by the commits module to create the single commit.
+     * @returns Data object.
+     */
+    var getData = function() {
+        return {
+            icao: $("#details #icao").text(),
+            iata: $("#details #iata").text(),
+            latitude: $("#details #latitude").val(),
+            longitude: $("#details #longitude").val(),
+            name: $("#details #name").text(),
+            city: $("#details #city").text(),
+            country: $("#details #country").text(),
+            altitude: $("#details #altitude").text()
+        };
+    };
+
+    /**
+     * Generates a valid url for AJAX query.
+     * @param icao The ICAO of the airport.
+     * @returns {string} The URL.
+     */
+    var getCommitUrl = function(icao) {
+        return "/airports/save/" + icao;
+    };
+
+    /**
+     * Queries server to create the commit.
+     * @param description Description of the commit.
+     * @param email Author e-mail address.
+     */
+    var commit = function(description, email) {
+        editDisable();
+        commits.ui.progressDialog.open();
+
+        var data = $.extend({}, getData(), {
+            description: description,
+            email: email
+        });
+
+        var url = getCommitUrl(data.icao);
+
+        commits.commit(url, data, function() {
+            commits.ui.successDialog.open();
+        }, function() {
+            commits.ui.errorDialog.open();
+        });
+    };
+
+    /**
+     * Initializes the module.
+     */
+    var init = function() {
+        map.init();
+
+        commits.ui.editDialog.accept(editEnable);
+        commits.ui.confirmDialog.confirm(commit);
+
+        $editButton = $("#enableButton");
+        $editButton.click(function() {
+            commits.ui.editDialog.open();
+        });
+
+        $saveButton = $("#saveButton");
+        $saveButton.click(function() {
+            commits.ui.confirmDialog.open();
+        });
+
+        $cancelButton = $("#cancelButton");
+        $cancelButton.click(function() {
+            editDisable();
+        });
+
+        $fields = $(".editable");
+    };
+
+    $(document).ready(function() {
+        init();
+    });
+
+    // public scope
+    return {};
 
 }());

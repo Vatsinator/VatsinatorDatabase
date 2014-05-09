@@ -66,4 +66,15 @@
         <span class="editModeLabel" id="editModeLabel"
               style="display: none;">You may now edit this airport's details.</span>
     </p>
+
+    <p>
+        {% if changes %}
+            <h2>Changelog</h2>
+            <ul>
+                {% for c in changes %}
+                    <li>{{ c.description }} (committed on {{ c.timestamp }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </p>
 {% endblock %}

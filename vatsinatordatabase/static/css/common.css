@@ -178,6 +178,11 @@ a.paginating:hover {
     font-weight: bold;
 }
 
+#bodyWrapper h2 {
+    font-size: 1.0em;
+    font-weight: bold;
+}
+
 #bodyWrapper p {
     margin: 10px 0 0 0;
 }

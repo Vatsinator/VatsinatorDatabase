@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
@@ -61,8 +62,12 @@ def details(request, icao):
         icao: the airport ICAO code.
     """
     ap = get_object_or_404(Airport, icao=icao)
+    changes = Commit.objects.filter(content_type=ContentType.objects.get_for_model(ap), object_id=ap.id,
+                                    status='AC').order_by('-timestamp')
+
     return render(request, 'airports/details.html', {
         'ap': ap,
+        'changes': changes
     })
 
 

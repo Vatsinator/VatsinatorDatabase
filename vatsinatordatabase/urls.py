@@ -8,4 +8,5 @@ urlpatterns = patterns('',
                        url(r'^airlines/', include('airlines.urls')),
                        url(r'^airports/', include('airports.urls')),
                        url(r'^commits/', include('commits.urls')),
+                       url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
 )

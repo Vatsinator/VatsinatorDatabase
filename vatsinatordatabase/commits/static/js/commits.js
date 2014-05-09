@@ -383,7 +383,8 @@ var commits = (function() {
 
     }());
 
-    var commit = function(url, data, success, error) {
+    var add = function(url, data, success, error) {
+        console.log(data);
         $.ajax({
             url: url,
             type: "post",
@@ -402,10 +403,61 @@ var commits = (function() {
         });
     };
 
+    var $token, $acceptButton, $rejectButton;
+
+    /**
+     * Accepts the commit.
+     */
+    var accept = function() {
+        ui.progressDialog.open();
+
+        var token = $token.val();
+
+        $.ajax({
+            url: "/commits/accept/" + token,
+            type: "post",
+
+            success: function(data) {
+                if (data.result == 1)
+                    window.location.replace(data.url);
+            }
+        });
+    };
+
+    /**
+     * Rejects the commit.
+     */
+    var reject = function() {
+        ui.progressDialog.open();
+
+        var token = $token.val();
+
+        $.ajax({
+            url: "/commits/reject/" + token,
+            type: "post",
+
+            success: function(data) {
+                if (data.result == 1)
+                    window.location.replace(data.url);
+            }
+        });
+    };
+
+    $(document).ready(function() {
+        $token = $("#commitToken");
+        if ($token.length) {
+            $acceptButton = $("#commitAccept");
+            $rejectButton = $("#commitReject");
+
+            $acceptButton.click(accept);
+            $rejectButton.click(reject);
+        }
+    });
+
     // public scope
     return {
         ui: ui,
-        commit: commit
+        add: add
     };
 
 }());

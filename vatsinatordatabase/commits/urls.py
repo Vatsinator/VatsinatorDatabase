@@ -5,12 +5,12 @@ from commits.views import *
 
 urlpatterns = patterns('',
                        url(
-                           regex=r'^accept/?$',
+                           regex=r'^accept/(?P<token>.+)$',
                            view=accept,
                            name='accept'
                            , ),
                        url(
-                           regex=r'^reject/?$',
+                           regex=r'^reject/(?P<token>.+)$',
                            view=reject,
                            name='reject'
                            , ),

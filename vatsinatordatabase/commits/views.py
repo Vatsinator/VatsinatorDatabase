@@ -1,11 +1,13 @@
-import json
-
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+from annoying.decorators import ajax_request
 
 from models import Commit
 
+
+@login_required
 @ensure_csrf_cookie
 def review(request, token):
     """
@@ -23,55 +25,46 @@ def review(request, token):
     })
 
 
-def accept(request):
+@require_POST
+@ajax_request
+def accept(request, token):
     """
     Accept the commit.
 
     Args:
         request: the request.
+        token: the commit token.
     """
+    if not request.user.is_authenticated():
+        return {'result': 0, 'reason': 'Not authenticated'}
+
     try:
-        token = request.POST['token']
         commit = Commit.objects.get(token=token)
         commit.merge()
 
-        return HttpResponse(json.dumps(
-            {
-                'result': 1,
-                'url': commit.url
-            }
-        ), content_type='application/json')
+        return {'result': 1, 'url': commit.url}
     except KeyError:
-        return HttpResponse(json.dumps(
-            {
-                'result': 0,
-                'reason': 'Invalid request'
-            }
-        ), content_type='application/json')
+        return {'result': 0, 'reason': 'Invalid request'}
 
 
-def reject(request):
+@require_POST
+@ajax_request
+def reject(request, token):
     """
     Reject the commit.
 
     Args:
         request: the request.
+        token: the commit token.
     """
+    if not request.user.is_authenticated():
+        return {'result': 0, 'reason': 'Not authenticated'}
+
     try:
-        token = request.POST['token']
         commit = Commit.objects.get(token=token)
         commit.reject()
 
-        return HttpResponse(json.dumps(
-            {
-                'result': 1,
-                'url': commit.url
-            }
-        ), content_type='application/json')
+        return {'result': 1, 'url': commit.url}
     except KeyError:
-        return HttpResponse(json.dumps(
-            {
-                'result': 0,
-                'reason': 'Invalid request'
-            }
-        ), content_type='application/json')
+        return {'result': 0, 'reason': 'Invalid request'}
+

@@ -27,7 +27,8 @@ input {
     border-radius: 2px;
 }
 
-input[type=text] {
+input[type=text],
+input[type=password] {
     background-color: #ffffff;
     border: 1px solid #D2D2D2;
     width: 200px;
@@ -222,4 +223,12 @@ a.paginating:hover {
 
 #bodyWrapper #footer .copyright {
     margin: 5px 5px 0 0;
+}
+
+#bodyWrapper table.form {
+    margin: 10px;
+}
+
+#bodyWrapper table.form td {
+    padding: 0px 5px;
 }

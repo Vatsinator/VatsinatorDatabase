@@ -4,7 +4,7 @@
 
 //=require commits.js
 //=require jquery.editable.js
-var airports = (function () {
+var airports = (function() {
 
     /**
      * Manages the map.
@@ -126,6 +126,7 @@ var airports = (function () {
                     $(this).addClass("none");
                 if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
                     return false;
+                return true;
             }
         });
 
@@ -180,7 +181,6 @@ var airports = (function () {
      * @param email Author e-mail address.
      */
     var commit = function(description, email) {
-        editDisable();
         commits.ui.progressDialog.open();
 
         var data = $.extend({}, getData(), {
@@ -190,11 +190,13 @@ var airports = (function () {
 
         var url = getCommitUrl(data.icao);
 
-        commits.commit(url, data, function() {
+        commits.add(url, data, function() {
             commits.ui.successDialog.open();
         }, function() {
             commits.ui.errorDialog.open();
         });
+
+        editDisable();
     };
 
     /**

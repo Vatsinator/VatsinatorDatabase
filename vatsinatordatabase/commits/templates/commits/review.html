@@ -17,25 +17,16 @@
         <strong>Object ({{ commit.content_type }}):</strong> {{ commit.content_object }}<br/>
         <strong>Status:</strong> {{ commit.status_nice }}
     </p>
-    <p>The following changes will be commited:<br/>
+    <p>The following changes will be committed:<br/>
     <ul>
         {% for d in data %}
             <li><strong>{{ d.field_name }}:</strong> {{ d.old_value }} -> {{ d.new_value }}</li>
         {% endfor %}
+    </ul>
     </p>
     <p>
         <input type="button" class="cyan" value="Accept" id="commitAccept"/>
         <input type="button" class="red" value="Reject" id="commitReject"/>
     </p>
 
-{% endblock %}
-
-{% block bodyEnd %}
-    <div id="commitDialog" style="display: none;">
-        <p>Merging changes with the database...</p>
-    </div>
-
-    <div id="rejectDialog" style="display: none;">
-        <p>Rejecting commit...</p>
-    </div>
 {% endblock %}

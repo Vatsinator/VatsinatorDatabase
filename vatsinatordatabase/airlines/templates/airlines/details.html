@@ -6,6 +6,12 @@
 {% block css %}
     <link rel="stylesheet" href="{% static "css/details.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/airlines.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/airlines.js" %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -37,22 +43,26 @@
                 {{ a.website|default:"<span class=\"none\">unknown</span>" }}
             </span>
         </span>
-
-        <span class="left">Logo:</span>
-        <span class="right" id="logo">
-            {% if a.logo %}
-                <img src="http://repo.vatsinator.eu.org/airline-logos/{{ a.logo }}" class="airline-logo"/>
-            {% endif %}
-         </span>
     </p>
+    <div class="logo-field">
+        {% if a.logo %}
+            <p>Logo:</p>
+            <img src="{{ a.logo }}" class="airline-logo"/>
+            <form method="post" enctype="multipart/form-data" id="logoUpload" style="display:none;">
+                <input type="file" id="logoInput" accept="image/jpeg,image/gif,image/png" name="file"/>
+                <img src="{% static "img/ajax-loader.gif" %}" class="logo-upload-progress" style="display:none;"/>
+                <input type="submit" value="Upload the new logo" class="cyan" disabled="disabled"/>
+            </form>
+        {% endif %}
+    </div>
     <p style="height: 20px; clear:both;"></p>
     <p id="buttonField">
-        <input type="button" id="enableEditModeBtn" value="Edit" class="cyan"/>
-        <input type="button" id="saveDetailsBtn" value="Save details" class="cyan" style="display: none;"/>
-        <input type="button" id="editCancelBtn" value="Cancel" class="red" style="display: none;"/>
+        <input type="button" id="enableButton" value="Edit" class="cyan"/>
+        <input type="button" id="saveButton" value="Save details" class="cyan" style="display: none;"/>
+        <input type="button" id="cancelButton" value="Cancel" class="red" style="display: none;"/>
 
         <span class="editModeLabel" id="editModeLabel"
-              style="display: none;">You may now edit this airport's details.</span>
+              style="display: none;">You may now edit this airline's details.</span>
     </p>
 {% endblock %}
 

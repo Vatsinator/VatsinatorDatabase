@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
+from django.conf import settings
+from django.conf.urls.static import static
 
-from airlines.views import *
+from views import *
 
 
 urlpatterns = patterns('',
@@ -19,4 +21,14 @@ urlpatterns = patterns('',
                            view=details,
                            name='airlines.details'
                            , ),
-)
+                       url(
+                           regex=r'^save/(?P<icao>.+)$',
+                           view=save,
+                           name='airlines.save'
+                           , ),
+                       url(
+                           regex=r'^upload-logo/(?P<icao>.+)$',
+                           view=upload_logo,
+                           name='airlines.upload-logo'
+                           , ),
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

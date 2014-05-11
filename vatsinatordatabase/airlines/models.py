@@ -13,3 +13,11 @@ class Airline(models.Model):
 
     def __unicode__(self):
         return unicode("%s %s" % (self.icao, self.name))
+
+
+class Logo(models.Model):
+    """
+    Logo upload field.
+    """
+    airline = models.ForeignKey(Airline, related_name='r')
+    file = models.ImageField(upload_to='airline-logos')

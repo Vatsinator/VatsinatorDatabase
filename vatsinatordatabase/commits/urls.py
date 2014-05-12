@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from commits.views import *
+from views import *
 
 
 urlpatterns = patterns('',

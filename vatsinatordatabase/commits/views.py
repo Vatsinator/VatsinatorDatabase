@@ -11,11 +11,10 @@ from models import Commit
 @ensure_csrf_cookie
 def review(request, token):
     """
-    Render the commit data.
-
-    Args:
-        request: the request.
-        token: the requested Commit token.
+    Render the commit details.
+    @param request: The HttpRequest.
+    @param token: The commit token.
+    @return: The HttpResponse.
     """
     commit = get_object_or_404(Commit, token=token)
     data = commit.commitdata_set.all()
@@ -29,11 +28,10 @@ def review(request, token):
 @ajax_request
 def accept(request, token):
     """
-    Accept the commit.
-
-    Args:
-        request: the request.
-        token: the commit token.
+    Accept the commit; merge it with the database and mark it as Accepted.
+    @param request: The HttpRequest.
+    @param token: The commit token.
+    @return: The JsonResponse.
     """
     if not request.user.is_authenticated():
         return {'result': 0, 'reason': 'Not authenticated'}
@@ -51,11 +49,10 @@ def accept(request, token):
 @ajax_request
 def reject(request, token):
     """
-    Reject the commit.
-
-    Args:
-        request: the request.
-        token: the commit token.
+    Reject the commit; mark it as Rejected.
+    @param request: The HttpRequest.
+    @param token: The commit token.
+    @return: The JsonResponse.
     """
     if not request.user.is_authenticated():
         return {'result': 0, 'reason': 'Not authenticated'}

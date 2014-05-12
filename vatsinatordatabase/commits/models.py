@@ -33,34 +33,34 @@ class Commit(models.Model):
 
     def notify(self):
         """
-        Send appropriate notification about the commit.
+        Send admins notification about the new commit.
         """
         mail_admins('New commit',
                     'A new commit has been added.\nToken: %s/commits/%s' % (settings.DOMAIN_NAME, self.token))
 
     def merge(self):
         """
-        Merge the commit with the database.
+        Merge the commit with the database and send the user an e-mail with the notification.
         """
-        myobject = self.content_object
+        my_object = self.content_object
         data = self.commitdata_set.all()
 
         for d in data:
-            setattr(myobject, d.field_name, d.new_value)
+            setattr(my_object, d.field_name, d.new_value)
 
-        myobject.save()
+        my_object.save()
 
         self.status = 'AC'
         self.save()
 
         # Notify user
-        mailcontent = 'Your commit to the VatsinatorDatabase has been accepted.\n\
+        mail_content = 'Your commit to the VatsinatorDatabase has been accepted.\n\
 You can see the modified object here: %s%s\n\
 \n\
 Thank you for your contribution to the Vatsinator project.\n\
 Vatsinator Team' % (settings.DOMAIN_NAME, self.url)
         send_mail('Your commit to the VatsinatorDatabase has been accepted',
-                  mailcontent, 'notifications@vatsinator.eu.org', [self.email])
+                  mail_content, 'notifications@vatsinator.eu.org', [self.email])
 
     def reject(self):
         """
@@ -81,10 +81,9 @@ Vatsinator Team' % (settings.DOMAIN_NAME, self.url)
     @classmethod
     def create(cls, content_object):
         """
-        Create new commit.
-
-        Args:
-            content_object: the object that is being modified.
+        Create the new commit.
+        @param content_object: The object that is being modified.
+        @return: The commit object.
         """
         commit = cls(content_object=content_object)
         commit.timestamp = datetime.utcnow()
@@ -110,13 +109,12 @@ class CommitData(models.Model):
     @classmethod
     def create(cls, commit, field_name, old_value, new_value):
         """
-        Create new data row.
-
-        Args:
-            commit: the Commit object.
-            field_name: the field name.
-            old_value: the old value of the field.
-            new_value: the new value of the field.
+        Create the new data row.
+        @param commit: The commit.
+        @param field_name: The name of the field that is being modified.
+        @param old_value: The old value of the field.
+        @param new_value: The new value of the field.
+        @return: The CommitData object.
         """
         data = cls(commit=commit)
         data.field_name = field_name

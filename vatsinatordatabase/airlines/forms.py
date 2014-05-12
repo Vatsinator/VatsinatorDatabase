@@ -16,7 +16,7 @@ class LogoUploadForm(forms.Form):
         """
         Check if the image has acceptable dimensions.
         @return: The image.
-        @raise forms.ValidationError: the image exceeds maximum dimensions.
+        @raise forms.ValidationError: The image exceeds maximum dimensions.
         """
         picture = self.cleaned_data.get('file')
         if not picture:

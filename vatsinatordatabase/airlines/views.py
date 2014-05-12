@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
+from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from annoying.decorators import ajax_request
 
@@ -14,8 +15,8 @@ from models import Airline, Logo
 
 def index(request):
     """
-    Default view, the search field only.
-    @param request: the HttpRequest.
+    Render the search field.
+    @param request: The HttpRequest.
     @return: The HttpResponse.
     """
     return render(request, 'airlines/search.html')
@@ -23,11 +24,16 @@ def index(request):
 
 def search(request):
     """
-    Search results view.
-    @param request: the HttpRequest.
+    Render search results.
+    @param request: The HttpRequest.
     @return: The HttpResponse.
     """
-    q = request.GET['q']
+    try:
+        q = request.GET['q']
+    except MultiValueDictKeyError:
+        # return default view on no query
+        return index(request)
+
     results = Airline.objects.filter(Q(icao__istartswith=q) | Q(name__icontains=q))
     if len(results) == 0:
         return render(request, 'airlines/search.html', {
@@ -54,10 +60,10 @@ def search(request):
 @ensure_csrf_cookie
 def details(request, icao):
     """
-    Airline details view.
-    @param request: the HttpRequest.
-    @param icao: the airline ICAO code.
-    @return: the HttpResponse.
+    Render airline details.
+    @param request: The HttpRequest.
+    @param icao: The airline ICAO code.
+    @return: The HttpResponse.
     """
     a = get_object_or_404(Airline, icao=icao)
     if a.logo and not a.logo.startswith('/upload/'):
@@ -77,9 +83,9 @@ def details(request, icao):
 def save(request, icao):
     """
     Create airline commit.
-    @param request: the HttpRequest; has to store new airline values in POST.
-    @param icao: the airline ICAO code.
-    @return: the JsonResponse.
+    @param request: The HttpRequest; has to store new airline values in POST.
+    @param icao: The airline ICAO code.
+    @return: The JsonResponse.
     """
     try:
         airline = Airline.objects.get(icao=icao)
@@ -108,9 +114,9 @@ def save(request, icao):
 def upload_logo(request, icao):
     """
     Upload the new airline logo.
-    @param request: the HttpRequest; has to store new airline logo in FILES, under 'file' key.
-    @param icao: the airline ICAO code.
-    @return: the JsonResponse.
+    @param request: The HttpRequest; has to store new airline logo in FILES, under 'file' key.
+    @param icao: The airline ICAO code.
+    @return: The JsonResponse.
     """
     form = LogoUploadForm(request.POST, request.FILES)
     if form.is_valid():

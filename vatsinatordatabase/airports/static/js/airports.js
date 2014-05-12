@@ -124,8 +124,12 @@ var airports = (function() {
             onCommit: function(oldData, newData) {
                 if (newData == "unknown")
                     $(this).addClass("none");
+                else
+                    $(this).removeClass("none");
+
                 if ($(this).attr("id") == "altitude" && !$.isNumeric(newData))
                     return false;
+
                 return true;
             }
         });
@@ -150,18 +154,30 @@ var airports = (function() {
     };
 
     /**
+     * In the UI, variables that are not set are marked as "unknown".
+     * Time to get rid of this.
+     * @param text Text to cleanup.
+     */
+    var cleanup = function(text) {
+        if (text == "unknown")
+            return "";
+        else
+            return text;
+    };
+
+    /**
      * Prepares data required by the commits module to create the single commit.
      * @returns Data object.
      */
     var getData = function() {
         return {
             icao: $("#details #icao").text(),
-            iata: $("#details #iata").text(),
+            iata: cleanup($("#details #iata").text()),
             latitude: $("#details #latitude").val(),
             longitude: $("#details #longitude").val(),
-            name: $("#details #name").text(),
-            city: $("#details #city").text(),
-            country: $("#details #country").text(),
+            name: cleanup($("#details #name").text()),
+            city: cleanup($("#details #city").text()),
+            country: cleanup($("#details #country").text()),
             altitude: $("#details #altitude").text()
         };
     };

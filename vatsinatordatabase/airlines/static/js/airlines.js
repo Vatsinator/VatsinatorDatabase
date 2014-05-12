@@ -62,8 +62,8 @@ var airlines = (function() {
     };
 
     /**
-     *
-     * @param event
+     * Uploads the logo.
+     * @param event Optional; the event.
      */
     var uploadLogo = function(event) {
         if (event !== undefined) {
@@ -135,6 +135,7 @@ var airlines = (function() {
                     $(this).addClass("none");
                 else
                     $(this).removeClass("none");
+
                 return true;
             }
         });
@@ -159,15 +160,27 @@ var airlines = (function() {
     };
 
     /**
+     * In the UI, variables that are not set are marked as "unknown".
+     * Time to get rid of this.
+     * @param text Text to cleanup.
+     */
+    var cleanup = function(text) {
+        if (text == "unknown")
+            return "";
+        else
+            return text;
+    };
+
+    /**
      * Prepares data required by the commits module to create the single commit.
      * @returns Data object.
      */
     var getData = function() {
         return {
-            icao: $("#details #icao").text(),
-            name: $("#details #name").text(),
-            country: $("#details #country").text(),
-            website: $("#details #website").text(),
+            icao: getIcao(),
+            name: cleanup($("#details #name").text()),
+            country: cleanup($("#details #country").text()),
+            website: cleanup($("#details #website").text()),
             logo: $logoImg.attr("src")
         };
     };

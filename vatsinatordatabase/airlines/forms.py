@@ -4,17 +4,19 @@ from django.core.files.images import get_image_dimensions
 
 class LogoUploadForm(forms.Form):
     """
-    A simple form that handles one file - the new airline )logo.
+    A simple form that handles one file - the new airline logo.
     """
     file = forms.ImageField()
 
     # Max logo dimensions
-    max_width = 85
-    max_height = 18
+    max_width = 200
+    max_height = 20
 
     def clean_file(self):
         """
-        Check if the uploaded logo file has dimensions small enough.
+        Check if the image has acceptable dimensions.
+        @return: The image.
+        @raise forms.ValidationError: the image exceeds maximum dimensions.
         """
         picture = self.cleaned_data.get('file')
         if not picture:

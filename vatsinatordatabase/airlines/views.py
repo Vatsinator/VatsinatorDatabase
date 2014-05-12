@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
@@ -14,6 +15,8 @@ from models import Airline, Logo
 def index(request):
     """
     Default view, the search field only.
+    @param request: the HttpRequest.
+    @return: The HttpResponse.
     """
     return render(request, 'airlines/search.html')
 
@@ -21,6 +24,8 @@ def index(request):
 def search(request):
     """
     Search results view.
+    @param request: the HttpRequest.
+    @return: The HttpResponse.
     """
     q = request.GET['q']
     results = Airline.objects.filter(Q(icao__istartswith=q) | Q(name__icontains=q))
@@ -50,12 +55,20 @@ def search(request):
 def details(request, icao):
     """
     Airline details view.
+    @param request: the HttpRequest.
+    @param icao: the airline ICAO code.
+    @return: the HttpResponse.
     """
     a = get_object_or_404(Airline, icao=icao)
-    if not a.logo.startswith('/upload/'):
+    if a.logo and not a.logo.startswith('/upload/'):
         a.logo = 'http://repo.vatsinator.eu.org/airline-logos/' + a.logo
+
+    changes = Commit.objects.filter(content_type=ContentType.objects.get_for_model(a), object_id=a.id,
+                                    status='AC').order_by('-timestamp')
+
     return render(request, 'airlines/details.html', {
         'a': a,
+        'changes': changes,
     })
 
 
@@ -63,13 +76,11 @@ def details(request, icao):
 @ajax_request
 def save(request, icao):
     """
-    Ajax view.
-
-    Args:
-        request: the request.
-        icao: the airline ICAO code.
+    Create airline commit.
+    @param request: the HttpRequest; has to store new airline values in POST.
+    @param icao: the airline ICAO code.
+    @return: the JsonResponse.
     """
-
     try:
         airline = Airline.objects.get(icao=icao)
         commit = Commit.create(airline)
@@ -96,11 +107,10 @@ def save(request, icao):
 @ajax_request
 def upload_logo(request, icao):
     """
-    Logo upload request.
-
-    Args:
-        request: the POST request.
-        icao: the airline ICAO code.
+    Upload the new airline logo.
+    @param request: the HttpRequest; has to store new airline logo in FILES, under 'file' key.
+    @param icao: the airline ICAO code.
+    @return: the JsonResponse.
     """
     form = LogoUploadForm(request.POST, request.FILES)
     if form.is_valid():

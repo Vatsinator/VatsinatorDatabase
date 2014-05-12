@@ -44,16 +44,13 @@
             </span>
         </span>
     </p>
-    <div class="logo-field">
-        {% if a.logo %}
-            <p>Logo:</p>
-            <img src="{{ a.logo }}" class="airline-logo"/>
-            <form method="post" enctype="multipart/form-data" id="logoUpload" style="display:none;">
-                <input type="file" id="logoInput" accept="image/jpeg,image/gif,image/png" name="file"/>
-                <img src="{% static "img/ajax-loader.gif" %}" class="logo-upload-progress" style="display:none;"/>
-                <input type="submit" value="Upload the new logo" class="cyan" disabled="disabled"/>
-            </form>
-        {% endif %}
+    <div class="logo-field" {% if not a.logo %}style="display: none;"{% endif %}>
+        <p>Logo:</p>
+        <img src="{{ a.logo }}" class="airline-logo" {% if not a.logo %}style="display: none;"{% endif %}/>
+    </div>
+    <div class="logo-form" style="display: none;">
+        <input type="file" id="logoInput" accept="image/jpeg,image/gif,image/png" name="file"/>
+        <img src="{% static "img/ajax-loader.gif" %}" class="logo-upload-progress" style="display:none;"/>
     </div>
     <p style="height: 20px; clear:both;"></p>
     <p id="buttonField">
@@ -63,6 +60,17 @@
 
         <span class="editModeLabel" id="editModeLabel"
               style="display: none;">You may now edit this airline's details.</span>
+    </p>
+
+    <p>
+        {% if changes %}
+            <h2>Changelog</h2>
+            <ul>
+                {% for c in changes %}
+                    <li>{{ c.description }} (committed on {{ c.timestamp }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </p>
 {% endblock %}
 

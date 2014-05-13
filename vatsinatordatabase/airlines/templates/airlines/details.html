@@ -4,7 +4,6 @@
 {% block title %}{{ a.name }} &bull; VatsinatorDatabase{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static "css/details.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/airlines.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
 {% endblock %}
@@ -17,7 +16,8 @@
 {% block content %}
     <h1>{{ a.name }}, {{ a.icao }}</h1>
 
-    <p id="details">
+    <div class="column-left">
+        <p id="details">
         <span class="line">
             <span class="left">ICAO code:</span>
             <span class="right" id="icao">{{ a.icao }}</span>
@@ -43,14 +43,23 @@
                 {{ a.website|default:"<span class=\"none\">unknown</span>" }}
             </span>
         </span>
-    </p>
-    <div class="logo-field" {% if not a.logo %}style="display: none;"{% endif %}>
-        <p>Logo:</p>
-        <img src="{{ a.logo }}" class="airline-logo" {% if not a.logo %}style="display: none;"{% endif %}/>
+        </p>
     </div>
-    <div class="logo-form" style="display: none;">
-        <input type="file" id="logoInput" accept="image/jpeg,image/gif,image/png" name="file"/>
-        <img src="{% static "img/ajax-loader.gif" %}" class="logo-upload-progress" style="display:none;"/>
+    <div class="column-right">
+        <div class="logo-field" {% if not a.logo %}style="display: none;"{% endif %}>
+            <p>Logo:</p>
+            <img src="{{ a.logo }}" class="airline-logo" {% if not a.logo %}style="display: none;"{% endif %}/>
+        </div>
+        <div class="logo-form" style="display: none;">
+            <input type="file" id="logoInput" accept="image/jpeg,image/gif,image/png" name="file"/>
+            <img src="{% static "img/ajax-loader.gif" %}" class="logo-upload-progress" style="display:none;"/>
+
+            <p class="upload-info">
+                You may upload the new logo here. The new logo should be in png format, transparent and it must not
+                exceed
+                dimensions of {{ max_logo_width }}x{{ max_logo_height }}.
+            </p>
+        </div>
     </div>
     <p style="height: 20px; clear:both;"></p>
     <p id="buttonField">

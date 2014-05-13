@@ -335,6 +335,9 @@ var commits = (function() {
                     .addClass("content")
                     .text(contentText)
                 )
+                .append($("<p>")
+                    .addClass("reason")
+                )
                 .append($("<input>")
                     .attr("type", "button")
                     .val(closeText)
@@ -348,7 +351,12 @@ var commits = (function() {
             /**
              * Opens the dialog.
              */
-            var open = function() {
+            var open = function(reason) {
+                if (reason) {
+                    dialog.children("p.reason").text(reason);
+                } else {
+                    dialog.children("p.reason").text("");
+                }
                 dialog.dialog("open");
             };
 

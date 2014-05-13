@@ -72,9 +72,14 @@ def details(request, icao):
     changes = Commit.objects.filter(content_type=ContentType.objects.get_for_model(a), object_id=a.id,
                                     status='AC').order_by('-timestamp')
 
+    max_logo_width = LogoUploadForm.max_width
+    max_logo_height = LogoUploadForm.max_height
+
     return render(request, 'airlines/details.html', {
         'a': a,
         'changes': changes,
+        'max_logo_width': max_logo_width,
+        'max_logo_height': max_logo_height
     })
 
 
@@ -123,11 +128,11 @@ def upload_logo(request, icao):
         try:
             a = Airline.objects.get(icao=icao)
         except Airline.DoesNotExist:
-            return {'result': 0, 'reason': 'Invalid request'}
+            return {'result': 0, 'reason': 'No such airport.'}
 
         logo = Logo(airline=a, file=request.FILES['file'])
         logo.save()
 
         return {'result': 1, 'url': logo.file.url}
     else:
-        return {'result': 0, 'reason': 'Invalid request'}
+        return {'result': 0, 'reason': 'The logo image is invalid; please read the instruction.'}

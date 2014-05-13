@@ -104,7 +104,7 @@ var airlines = (function() {
                         replaceLogo(data.url);
                 } else {
                     console.log("Error: " + data.reason);
-                    commits.ui.errorDialog.open();
+                    commits.ui.errorDialog.open(data.reason);
                 }
 
                 $logoUploadProgress.hide();

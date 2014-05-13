@@ -46,6 +46,11 @@ div.errorDialog p.content {
     font-size: 13px;
 }
 
+div.errorDialog p.reason {
+    color: #BB6f71;
+    margin: 10px 0px;
+}
+
 div.errorDialog input[type=button] {
     margin-top: 65px;
 }

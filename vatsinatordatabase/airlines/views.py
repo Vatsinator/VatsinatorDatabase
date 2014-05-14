@@ -99,7 +99,6 @@ def save(request, icao):
         commit.description = request.POST['description']
         commit.url = '/airlines/details/' + airline.icao
         commit.save()
-        commit.notify()
 
         fields = ['name', 'country', 'website', 'logo']
         for f in fields:

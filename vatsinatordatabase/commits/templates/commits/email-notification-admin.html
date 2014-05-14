@@ -1,0 +1,23 @@
+<body>
+
+<h1 style="font-size: 1.3em; font-weight: bold;">
+    <a href="http://database.vatsinator.eu.org/">
+        <img src="http://database.vatsinator.eu.org/static/img/logo.png" style="margin: 10px;" alt="VatsinatorDatabase"
+             title="VatsinatorDatabase"/>
+    </a>
+</h1>
+
+<p>
+    Hello,<br/>
+    you are receiving this message because a new commit has been created.
+</p>
+
+<p>
+    Modified object: {{ commit.content_type }}, <strong>{{ commit.content_object }}</strong>
+</p>
+
+<p>
+    <a href="{{ commit.get_commit_url }}">Review the commit</a>
+</p>
+
+</body>

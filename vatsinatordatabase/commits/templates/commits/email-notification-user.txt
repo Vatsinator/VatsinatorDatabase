@@ -1,0 +1,11 @@
+==[ VatsinatorDatabase ]==
+
+Hello,
+you are receiving this message because your commit has been accepted and merged with the database.
+
+See the {{ commit.content_type }} here: {{ commit.get_commit_url }}
+
+We are thankful for your contribution to the Vatsinator project. Its main strength is the community, and you are part of it.
+
+Please do not reply to this e-mail, as it was sent automatically.
+If you wish to contact any Vatsinator Team member, you can see the following page: http://vatsinator.eu.org/contact/

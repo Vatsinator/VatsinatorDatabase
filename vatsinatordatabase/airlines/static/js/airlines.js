@@ -165,10 +165,11 @@ var airlines = (function() {
      * @param text Text to cleanup.
      */
     var cleanup = function(text) {
-        if (text == "unknown")
+        if (text == "unknown") {
             return "";
-        else
-            return text;
+        } else {
+            return text.replace("http://repo.vatsinator.eu.org/airline-logos/", "");
+        }
     };
 
     /**
@@ -181,7 +182,7 @@ var airlines = (function() {
             name: cleanup($("#details #name").text()),
             country: cleanup($("#details #country").text()),
             website: cleanup($("#details #website").text()),
-            logo: $logoImg.attr("src")
+            logo: cleanup($logoImg.attr("src"))
         };
     };
 

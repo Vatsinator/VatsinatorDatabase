@@ -2,10 +2,15 @@ from datetime import datetime
 from uuid import uuid1
 
 from django.db import models
+from django.dispatch import Signal
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericForeignKey
-from django.core.mail import mail_admins, send_mail
+from django.core.mail import send_mail
+
+
+# The post_merge signal is sent after the commit is merged with the database.
+post_merge = Signal(providing_args=["instance"])
 
 
 class Commit(models.Model):
@@ -31,12 +36,12 @@ class Commit(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
-    def notify(self):
+    def get_commit_url(self):
         """
-        Send admins notification about the new commit.
+        Generate url for the commit. Requires DOMAIN_NAME to be defined in settings.py.
+        @return: The absolute url of the commit.
         """
-        mail_admins('New commit',
-                    'A new commit has been added.\nToken: %s/commits/%s' % (settings.DOMAIN_NAME, self.token))
+        return "http://%s/commits/%s" % (settings.DOMAIN_NAME, self.token)
 
     def merge(self):
         """
@@ -53,14 +58,7 @@ class Commit(models.Model):
         self.status = 'AC'
         self.save()
 
-        # Notify user
-        mail_content = 'Your commit to the VatsinatorDatabase has been accepted.\n\
-You can see the modified object here: %s%s\n\
-\n\
-Thank you for your contribution to the Vatsinator project.\n\
-Vatsinator Team' % (settings.DOMAIN_NAME, self.url)
-        send_mail('Your commit to the VatsinatorDatabase has been accepted',
-                  mail_content, 'notifications@vatsinator.eu.org', [self.email])
+        post_merge.send(sender=self.__class__, instance=self)
 
     def reject(self):
         """

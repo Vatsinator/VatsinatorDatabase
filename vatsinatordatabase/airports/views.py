@@ -90,7 +90,6 @@ def save(request, icao):
         commit.description = request.POST['description']
         commit.url = '/airports/details/' + airport.icao
         commit.save()
-        commit.notify()
 
         fields = ['iata', 'name', 'city', 'country', 'latitude', 'longitude', 'altitude']
         for f in fields:

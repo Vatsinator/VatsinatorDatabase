@@ -1,0 +1,8 @@
+==[ VatsinatorDatabase ]==
+
+Hello,
+you are receiving this message because new commit has been requested to the VatsinatorDatabase.
+
+Modified object: {{ commit.content_type }}, {{ commit.content_object }}
+
+Review the commit: {{ commit.get_commit_url }}

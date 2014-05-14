@@ -93,8 +93,12 @@ def save(request, icao):
 
         fields = ['iata', 'name', 'city', 'country', 'latitude', 'longitude', 'altitude']
         for f in fields:
-            old = unicode(getattr(airport, f))
-            new = request.POST[f].strip()
+            try:
+                old = unicode(getattr(airport, f))
+                new = request.POST[f].strip()
+            except AttributeError:
+                return {'result': 0, 'reason': 'Invalid request'}
+
             if old != new:
                 data = CommitData.create(commit, f, old, new)
                 data.save()

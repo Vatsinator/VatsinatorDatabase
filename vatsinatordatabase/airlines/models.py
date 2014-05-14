@@ -6,7 +6,7 @@ class Airline(models.Model):
     This model describes a single Airline.
     """
     name = models.CharField(max_length=255)
-    icao = models.CharField(max_length=3)
+    icao = models.CharField(max_length=3, unique=True)
     country = models.CharField(max_length=255)
     website = models.URLField()
     logo = models.CharField(max_length=127)

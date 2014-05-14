@@ -10,7 +10,7 @@ class Airport(models.Model):
     city = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     iata = models.CharField(max_length=3)
-    icao = models.CharField(max_length=4)
+    icao = models.CharField(max_length=4, unique=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
     altitude = models.IntegerField()

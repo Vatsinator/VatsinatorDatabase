@@ -66,6 +66,8 @@ def details(request, icao):
     @return: The HttpResponse.
     """
     a = get_object_or_404(Airline, icao=icao)
+
+    # TODO Move airline logos to django application
     if a.logo and not a.logo.startswith('/upload/'):
         a.logo = 'http://repo.vatsinator.eu.org/airline-logos/' + a.logo
 
@@ -102,8 +104,12 @@ def save(request, icao):
 
         fields = ['name', 'country', 'website', 'logo']
         for f in fields:
-            old = unicode(getattr(airline, f))
-            new = request.POST[f].strip()
+            try:
+                old = unicode(getattr(airline, f))
+                new = request.POST[f].strip()
+            except AttributeError:
+                return {'result': 0, 'reason': 'Invalid request'}
+
             if old != new:
                 data = CommitData.create(commit, f, old, new)
                 data.save()

@@ -1,1 +1,2 @@
-cookielaw
+django-annoying
+django-cookie-law

@@ -44,7 +44,7 @@ class Commit(models.Model):
 
     def merge(self):
         """
-        Merge the commit with the database and send the user an e-mail with the notification.
+        Merge the commit with the database.
         """
         my_object = self.content_object
         data = self.commitdata_set.all()

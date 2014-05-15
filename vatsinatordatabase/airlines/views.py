@@ -5,7 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
-from annoying.decorators import ajax_request
+from annoying.decorators import ajax_request, render_to
 
 from vatsinatordatabase.commits.models import Commit, CommitData
 
@@ -13,15 +13,17 @@ from forms import LogoUploadForm
 from models import Airline, Logo
 
 
+@render_to('airlines/search.html')
 def index(request):
     """
     Render the search field.
     @param request: The HttpRequest.
     @return: The HttpResponse.
     """
-    return render(request, 'airlines/search.html')
+    return {}
 
 
+@render_to('airlines/search.html')
 def search(request):
     """
     Render search results.
@@ -51,13 +53,14 @@ def search(request):
     except EmptyPage:
         airline_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'airlines/search.html', {
+    return {
         'q': q,
         'airline_list': airline_list,
-    })
+    }
 
 
 @ensure_csrf_cookie
+@render_to('airlines/details.html')
 def details(request, icao):
     """
     Render airline details.
@@ -77,12 +80,12 @@ def details(request, icao):
     max_logo_width = LogoUploadForm.max_width
     max_logo_height = LogoUploadForm.max_height
 
-    return render(request, 'airlines/details.html', {
+    return {
         'a': a,
         'changes': changes,
         'max_logo_width': max_logo_width,
         'max_logo_height': max_logo_height
-    })
+    }
 
 
 @require_POST

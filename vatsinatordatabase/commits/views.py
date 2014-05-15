@@ -2,13 +2,14 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from annoying.decorators import ajax_request
+from annoying.decorators import ajax_request, render_to
 
 from models import Commit
 
 
 @login_required
 @ensure_csrf_cookie
+@render_to('commits/review.html')
 def review(request, token):
     """
     Render the commit details.
@@ -18,10 +19,10 @@ def review(request, token):
     """
     commit = get_object_or_404(Commit, token=token)
     data = commit.commitdata_set.all()
-    return render(request, 'commits/review.html', {
+    return {
         'commit': commit,
         'data': data
-    })
+    }
 
 
 @require_POST

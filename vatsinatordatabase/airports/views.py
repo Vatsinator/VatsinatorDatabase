@@ -5,22 +5,24 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
-from annoying.decorators import ajax_request
+from annoying.decorators import ajax_request, render_to
 
 from vatsinatordatabase.commits.models import Commit, CommitData
 
 from models import Airport
 
 
+@render_to('airports/search.html')
 def index(request):
     """
     Default view, render search field only.
     @param request: The HttpRequest.
     @return: The HttpResponse.
     """
-    return render(request, 'airports/search.html')
+    return {}
 
 
+@render_to('airports/search.html')
 def search(request):
     """
     Render search results.
@@ -35,10 +37,10 @@ def search(request):
 
     results = Airport.objects.filter(Q(icao__istartswith=q) | Q(name__icontains=q))
     if len(results) == 0:
-        return render(request, 'airports/search.html', {
+        return {
             'q': q,
             'error_message': "Sorry, could not find any airport.",
-        })
+        }
 
     paginator = Paginator(results, 25)
 
@@ -50,13 +52,14 @@ def search(request):
     except EmptyPage:
         airport_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'airports/search.html', {
+    return {
         'q': q,
         'airport_list': airport_list,
-    })
+    }
 
 
 @ensure_csrf_cookie
+@render_to('airports/details.html')
 def details(request, icao):
     """
     Render airport details.
@@ -68,10 +71,10 @@ def details(request, icao):
     changes = Commit.objects.filter(content_type=ContentType.objects.get_for_model(ap), object_id=ap.id,
                                     status='AC').order_by('-timestamp')
 
-    return render(request, 'airports/details.html', {
+    return {
         'ap': ap,
         'changes': changes
-    })
+    }
 
 
 @require_POST

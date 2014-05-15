@@ -46,4 +46,15 @@
         Any commited changed has to be reviewed and approved by one of the
         moderators before it gets merged into the main database.
     </p>
+
+    <h1>Database statistics</h1>
+    <p>
+    <ul>
+        <li>Airlines: <strong>{{ airline_count }}</strong></li>
+        <li>Airports: <strong>{{ airport_count }}</strong></li>
+        <li>Recently updated: <strong><a href="{{ last_commit.url }}">{{ last_commit.content_object }}</a></strong>
+            ({{ last_commit.description }})
+        </li>
+    </ul>
+    </p>
 {% endblock %}

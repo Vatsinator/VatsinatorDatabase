@@ -12,7 +12,7 @@ var vdModule = (function () {
     var toggleDefault = function ($object) {
         if ($.trim($object.val()) == "") {
             $object
-                .val($(this).attr("title"))
+                .val($object.attr("title"))
                 .addClass("default");
         } else if ($object.val() == $object.attr("title")) {
             $object

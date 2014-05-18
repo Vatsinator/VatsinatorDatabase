@@ -18,6 +18,9 @@ class Airline(models.Model):
 class Logo(models.Model):
     """
     Logo upload field.
+    This is not what Airline model uses. This model is used only during the logo file upload and
+    by repo-sync script, as a reference.
     """
     airline = models.ForeignKey(Airline, related_name='r')
     file = models.ImageField(upload_to='airline-logos')
+    created = models.DateTimeField()

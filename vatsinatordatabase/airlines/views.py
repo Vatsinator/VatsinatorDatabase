@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import get_object_or_404, render
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -70,10 +71,6 @@ def details(request, icao):
     """
     a = get_object_or_404(Airline, icao=icao)
 
-    # TODO Move airline logos to django application
-    if a.logo and not a.logo.startswith('/upload/'):
-        a.logo = 'http://repo.vatsinator.eu.org/airline-logos/' + a.logo
-
     changes = Commit.objects.filter(content_type=ContentType.objects.get_for_model(a), object_id=a.id,
                                     status='AC').order_by('-timestamp')
 
@@ -138,7 +135,7 @@ def upload_logo(request, icao):
         except Airline.DoesNotExist:
             return {'result': 0, 'reason': 'No such airport.'}
 
-        logo = Logo(airline=a, file=request.FILES['file'])
+        logo = Logo(airline=a, file=request.FILES['file'], created=datetime.utcnow())
         logo.save()
 
         return {'result': 1, 'url': logo.file.url}

@@ -48,7 +48,8 @@
     <div class="column-right">
         <div class="logo-field" {% if not a.logo %}style="display: none;"{% endif %}>
             <p>Logo:</p>
-            <img src="{{ a.logo }}" class="airline-logo" {% if not a.logo %}style="display: none;"{% endif %}/>
+            <img src="{{ a.logo|default:"" }}" class="airline-logo"
+                 {% if not a.logo %}style="display: none;"{% endif %}/>
         </div>
         <div class="logo-form" style="display: none;">
             <input type="file" id="logoInput" accept="image/jpeg,image/gif,image/png" name="file"/>

@@ -14,3 +14,4 @@ vatsinatordatabase/settings/db.cnf
 # pycharm
 .idea
 
+upload/*

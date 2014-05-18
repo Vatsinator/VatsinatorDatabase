@@ -12,8 +12,13 @@ def index(request):
     @param request: The HttpRequest
     @return: The HttpResponse
     """
+    try:
+        last_commit = Commit.objects.filter(status='AC').order_by('-timestamp')[0]
+    except IndexError:  # no commits
+        last_commit = None
+
     return {
         'airport_count': Airport.objects.count(),
         'airline_count': Airline.objects.count(),
-        'last_commit': Commit.objects.filter(status='AC').order_by('-timestamp')[0]
+        'last_commit': last_commit
     }

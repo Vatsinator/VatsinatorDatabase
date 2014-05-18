@@ -120,7 +120,7 @@ var airports = (function() {
 
         $fields.editable({
             defaultVal: "unknown",
-            editIcon: "/static/img/edit.png",
+            editIcon: "/static/editable/img/edit.png",
             onCommit: function(oldData, newData) {
                 if (newData == "unknown")
                     $(this).addClass("none");

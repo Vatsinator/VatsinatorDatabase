@@ -3,14 +3,14 @@
  */
 
 //=require commits/commits.js
-var airlines = (function () {
+var airlines = (function() {
     var $editButton, $saveButton, $cancelButton, $fields, $logoField, $logoForm, $logoInput, $logoUploadProgress, $logoImg, logoFile, origLogo;
 
     /**
      * When user picks the file, prepares it for the upload.
      * @param event The event.
      */
-    var prepareUpload = function (event) {
+    var prepareUpload = function(event) {
         if (event.target.files.length) {
             logoFile = event.target.files[0];
         } else {
@@ -22,7 +22,7 @@ var airlines = (function () {
      * Replaces the airline logo with the given url.
      * @param url The new image URL.
      */
-    var replaceLogo = function (url) {
+    var replaceLogo = function(url) {
         $logoImg.attr("src", url);
         $logoImg.show();
     };
@@ -31,7 +31,7 @@ var airlines = (function () {
      * If the logo is hidden (the airline does not have any yet), shows its container.
      * Additionally, it shows the "upload new logo" "form".
      */
-    var enableLogo = function () {
+    var enableLogo = function() {
         $logoField.show();
         $logoForm.show();
     };
@@ -40,7 +40,7 @@ var airlines = (function () {
      * Hides logo upload "form".
      * If user did not upload any logo, hides its container.
      */
-    var disableLogo = function () {
+    var disableLogo = function() {
         if (!origLogo.length) {
             var src = $logoImg.attr("src");
             if (!src.length) {
@@ -57,7 +57,7 @@ var airlines = (function () {
     /**
      * Gets the current airline ICAO code.
      */
-    var getIcao = function () {
+    var getIcao = function() {
         return $("#details #icao").text();
     };
 
@@ -65,7 +65,7 @@ var airlines = (function () {
      * Uploads the logo.
      * @param event Optional; the event.
      */
-    var uploadLogo = function (event) {
+    var uploadLogo = function(event) {
         if (event !== undefined) {
             event.stopPropagation();
             event.preventDefault();
@@ -98,7 +98,7 @@ var airlines = (function () {
             dataType: 'json',
             processData: false,
             contentType: false,
-            success: function (data, textStatus, jqXHR) {
+            success: function(data, textStatus, jqXHR) {
                 if (data.result == 1) {
                     if (data.url.length)
                         replaceLogo(data.url);
@@ -110,7 +110,7 @@ var airlines = (function () {
                 $logoUploadProgress.hide();
                 $logoInput.show();
             },
-            error: function (jqXHR, textStatus, errorThrown) {
+            error: function(jqXHR, textStatus, errorThrown) {
                 console.log("Error: " + textStatus);
 
                 commits.ui.errorDialog.open();
@@ -124,13 +124,13 @@ var airlines = (function () {
     /**
      * Enables the edit mode.
      */
-    var editEnable = function () {
+    var editEnable = function() {
         $editButton.hide();
 
         $fields.editable({
             defaultVal: "unknown",
-            editIcon: "/static/img/edit.png",
-            onCommit: function (oldData, newData) {
+            editIcon: "/static/editable/img/edit.png",
+            onCommit: function(oldData, newData) {
                 if (newData == "unknown")
                     $(this).addClass("none");
                 else
@@ -149,7 +149,7 @@ var airlines = (function () {
     /**
      * Disables the edit mode.
      */
-    var editDisable = function () {
+    var editDisable = function() {
         $saveButton.hide();
         $cancelButton.hide();
 
@@ -164,7 +164,7 @@ var airlines = (function () {
      * Time to get rid of this.
      * @param text Text to cleanup.
      */
-    var cleanup = function (text) {
+    var cleanup = function(text) {
         if (text == "unknown") {
             return "";
         } else {
@@ -176,7 +176,7 @@ var airlines = (function () {
      * Prepares data required by the commits module to create the single commit.
      * @returns Data object.
      */
-    var getData = function () {
+    var getData = function() {
         return {
             icao: getIcao(),
             name: cleanup($("#details #name").text()),
@@ -191,7 +191,7 @@ var airlines = (function () {
      * @param icao The ICAO of the airline.
      * @returns {string} The URL.
      */
-    var getCommitUrl = function (icao) {
+    var getCommitUrl = function(icao) {
         return "/airlines/save/" + icao;
     };
 
@@ -200,7 +200,7 @@ var airlines = (function () {
      * @param description Description of the commit.
      * @param email Author e-mail address.
      */
-    var commit = function (description, email) {
+    var commit = function(description, email) {
         commits.ui.progressDialog.open();
 
         var data = $.extend({}, getData(), {
@@ -210,9 +210,9 @@ var airlines = (function () {
 
         var url = getCommitUrl(data.icao);
 
-        commits.add(url, data, function () {
+        commits.add(url, data, function() {
             commits.ui.successDialog.open();
-        }, function () {
+        }, function() {
             commits.ui.errorDialog.open();
         });
 
@@ -222,7 +222,7 @@ var airlines = (function () {
     /**
      * Initializes the module.
      */
-    var init = function () {
+    var init = function() {
         $logoField = $(".logo-field");
         $logoImg = $logoField.children('img.airline-logo');
         origLogo = $logoImg.attr("src");
@@ -230,7 +230,7 @@ var airlines = (function () {
         $logoForm = $(".logo-form");
 
         $logoInput = $logoForm.children("#logoInput");
-        $logoInput.on('change', function (event) {
+        $logoInput.on('change', function(event) {
             prepareUpload(event);
             uploadLogo();
         });
@@ -241,24 +241,24 @@ var airlines = (function () {
         commits.ui.confirmDialog.confirm(commit);
 
         $editButton = $("#enableButton");
-        $editButton.click(function () {
+        $editButton.click(function() {
             commits.ui.editDialog.open();
         });
 
         $saveButton = $("#saveButton");
-        $saveButton.click(function () {
+        $saveButton.click(function() {
             commits.ui.confirmDialog.open();
         });
 
         $cancelButton = $("#cancelButton");
-        $cancelButton.click(function () {
+        $cancelButton.click(function() {
             editDisable();
         });
 
         $fields = $(".editable");
     };
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         init();
     });
 

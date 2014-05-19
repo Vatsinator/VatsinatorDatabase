@@ -16,6 +16,7 @@
 
 {% block content %}
     <h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
+    <input type="hidden" value="details" id="page-type"/>
 
     <p id="details">
         <input type="hidden" id="latitude" value="{{ ap.latitude }}"/>

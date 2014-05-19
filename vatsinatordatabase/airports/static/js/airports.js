@@ -3,6 +3,7 @@
  */
 
 //=require commits.js
+//=require jquery.dialog.js
 //=require jquery.editable.js
 var airports = (function() {
 
@@ -110,7 +111,70 @@ var airports = (function() {
 
     }());
 
-    var $editButton, $saveButton, $cancelButton, $fields;
+    var pageType, $editButton, $saveButton, $cancelButton, $fields, $createNewAirportButton;
+
+    /**
+     * This dialog is opened when user wants to create the new airport.
+     * It asks user for the ICAO code to create the new airport instance in the database.
+     */
+    var newAirportIcaoDialog = (function() {
+        var captionText = "Create new airport";
+        var contentText = "In order to create the new airport, you must firstly provide its ICAO code.";
+        var confirmText = "Confirm";
+
+        var $icaoInput = $("<input>")
+            .attr("type", "text")
+            .attr("maxlength", "4");
+
+        var dialog = $("<div>")
+            .addClass("newAirportIcaoDialog")
+            .css("display", "none")
+            .append($("<p>")
+                .addClass("caption")
+                .text(captionText)
+            )
+            .append($("<p>")
+                .addClass("content")
+                .text(contentText)
+            )
+            .append($icaoInput)
+            .append($("<input>")
+                .attr("type", "button")
+                .addClass("cyan")
+                .val(confirmText)
+            );
+
+        /**
+         * Opens the dialog.
+         */
+        var open = function() {
+            dialog.dialog("open", {
+                height: 120
+            });
+        };
+
+        /**
+         * Closes the dialog.
+         */
+        var close = function() {
+            dialog.dialog("close");
+        };
+
+        var setValue = function(value) {
+            $icaoInput.val(value);
+        };
+
+        $(document).ready(function() {
+            dialog.appendTo($("body"));
+        });
+
+        // public scope
+        return {
+            open: open,
+            close: close,
+            setValue: setValue
+        };
+    }());
 
     /**
      * Enables the edit mode.
@@ -215,31 +279,47 @@ var airports = (function() {
         editDisable();
     };
 
+    var createNew = function() {
+        var icao = $("#query-original").val();
+        newAirportIcaoDialog.setValue(icao);
+        newAirportIcaoDialog.open();
+    };
+
     /**
      * Initializes the module.
      */
     var init = function() {
-        map.init();
+        pageType = $("#page-type").val();
+        switch (pageType) {
+            case 'details':
+                map.init();
 
-        commits.ui.editDialog.accept(editEnable);
-        commits.ui.confirmDialog.confirm(commit);
+                commits.ui.editDialog.accept(editEnable);
+                commits.ui.confirmDialog.confirm(commit);
 
-        $editButton = $("#enableButton");
-        $editButton.click(function() {
-            commits.ui.editDialog.open();
-        });
+                $editButton = $("#enableButton");
+                $editButton.click(function() {
+                    commits.ui.editDialog.open();
+                });
 
-        $saveButton = $("#saveButton");
-        $saveButton.click(function() {
-            commits.ui.confirmDialog.open();
-        });
+                $saveButton = $("#saveButton");
+                $saveButton.click(function() {
+                    commits.ui.confirmDialog.open();
+                });
 
-        $cancelButton = $("#cancelButton");
-        $cancelButton.click(function() {
-            editDisable();
-        });
+                $cancelButton = $("#cancelButton");
+                $cancelButton.click(function() {
+                    editDisable();
+                });
 
-        $fields = $(".editable");
+                $fields = $(".editable");
+                break;
+
+            case 'search':
+                $createNewAirportButton = $("#new-airport-button");
+                $createNewAirportButton.click(createNew);
+                break;
+        }
     };
 
     $(document).ready(function() {

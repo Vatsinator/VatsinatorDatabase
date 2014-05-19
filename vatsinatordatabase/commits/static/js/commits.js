@@ -392,7 +392,6 @@ var commits = (function() {
     }());
 
     var add = function(url, data, success, error) {
-        console.log(data);
         $.ajax({
             url: url,
             type: "post",

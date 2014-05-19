@@ -1,9 +1,21 @@
 {% extends "__base.html" %}
+{% load staticfiles %}
 
 {% block title %}Airports &bull; VatsinatorDatabase{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/airports.css" %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/airports.js" %}" type="text/javascript"></script>
+{% endblock %}
+
 {% block content %}
     <h1>Airport search</h1>
+    <input type="hidden" value="search" id="page-type"/>
 
     {% if error_message %}
         <p><span class="error_message">{{ error_message }}</span></p>
@@ -15,6 +27,11 @@
         <input type="submit" value="Search" class="cyan"/>
     </form>
     </p>
+
+    {% if create_new %}
+        <input type="hidden" value="{{ q|default:"" }}" id="query-original"/>
+        <input type="button" value="Create new airport" class="cyan" id="new-airport-button"/>
+    {% endif %}
 
     {% if airport_list %}
         <p>

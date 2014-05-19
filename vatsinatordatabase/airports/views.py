@@ -40,6 +40,7 @@ def search(request):
         return {
             'q': q,
             'error_message': "Sorry, could not find any airport.",
+            'create_new': len(q) == 4
         }
 
     paginator = Paginator(results, 25)
@@ -109,3 +110,4 @@ def save(request, icao):
         return {'result': 1}
     except KeyError:
         return {'result': 0, 'reason': 'Invalid request'}
+

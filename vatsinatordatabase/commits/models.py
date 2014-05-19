@@ -22,6 +22,12 @@ class Commit(models.Model):
         ('RE', 'Rejected')
     )
 
+    COMMIT_TYPE_CHOICES = (
+        ('MOD', 'Modification'),
+        ('NEW', 'Creation'),
+        ('DEL', 'Deletion')
+    )
+
     email = models.EmailField(max_length=255)
     description = models.TextField()
     timestamp = models.DateTimeField()
@@ -30,6 +36,9 @@ class Commit(models.Model):
     status = models.CharField(max_length=2,
                               choices=COMMIT_STATUS_CHOICES,
                               default='PE')
+    type = models.CharField(max_length=3,
+                            choices=COMMIT_TYPE_CHOICES,
+                            default='MOD')
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()

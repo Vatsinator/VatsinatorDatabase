@@ -51,3 +51,8 @@ div#errorMsg #errorText {
     font-weight: bold;
     color: #FF7171;
 }
+
+div.newAirportIcaoDialog p.content {
+    font-size: 13px;
+    margin: 10px;
+}

@@ -69,3 +69,46 @@ class CommitTestCase(TestCase):
         self.assertEqual(airline.name, u"Test Airline after test")
         self.assertEqual(airline.country, u"Test Country after test")
         self.assertEqual(airline.website, u"xyz.example.com")
+
+    def test_commit_airport_merge(self):
+        """
+        Test that commits work on airports.
+        """
+        airport = Airport.objects.get(icao="XYZZ")
+        self.assertTrue(isinstance(airport, Airport))
+        commit = Commit.create(airport)
+        self.assertTrue(isinstance(commit, Commit))
+        commit.email = "from@example.com"
+        commit.description = "Testing commits"
+        commit.url = '/airports/details/' + airport.icao
+        commit.save()
+
+        new_data = {
+            'name': u'Test Airport after test',
+            'city': u'Test City after test',
+            'country': u'Test Country after test',
+            'latitude': 2.00,
+            'longitude': 2.00,
+            'altitude': 220
+        }
+        fields = ['name', 'city', 'country', 'latitude', 'longitude', 'altitude']
+        for f in fields:
+            old = unicode(getattr(airport, f))
+            new = new_data[f]
+
+            if old != new:
+                data = CommitData.create(commit, f, old, new)
+                data.save()
+
+        data_set = commit.commitdata_set.all()
+        self.assertEqual(len(data_set), 6)
+        commit.merge()
+
+        airport = Airport.objects.get(icao="XYZZ")
+        self.assertEqual(commit.status, 'AC')
+        self.assertEqual(airport.name, u"Test Airport after test")
+        self.assertEqual(airport.city, u"Test City after test")
+        self.assertEqual(airport.country, u"Test Country after test")
+        self.assertEqual(airport.latitude, 2.00)
+        self.assertEqual(airport.longitude, 2.00)
+        self.assertEqual(airport.altitude, 220)

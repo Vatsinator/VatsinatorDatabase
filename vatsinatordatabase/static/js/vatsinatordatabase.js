@@ -102,8 +102,11 @@ var vdModule = (function () {
     };
 
 
+    $(document).ready(function() {
+        init();
+    });
+
+
     // public scope
-    return {
-        init: init
-    }
+    return {}
 }());

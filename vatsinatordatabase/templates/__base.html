@@ -49,7 +49,7 @@
     {% block content %}{% endblock %}
 
     <div id="footer">
-        <div class="copyright">{% block copyright %}by Vatsinator Team &copy; 2013{% endblock %}</div>
+        <div class="copyright">{% block copyright %}by Vatsinator Team &copy; {% now "Y" %}{% endblock %}</div>
     </div>
 </div>
 {% block bodyEnd %}{% endblock %}

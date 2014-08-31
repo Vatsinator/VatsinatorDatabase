@@ -1,19 +1,8 @@
 #CookielawBanner {
     background: #fff;
-    padding: 15px 0;
+    padding: 15px 15px;
 }
 
 #CookielawBanner .container {
     position: relative;
-}
-
-#CookielawBanner #CookielawCross {
-    background: url('/static/img/close.png') no-repeat 0 0;
-    cursor: pointer;
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 15px;
-    height: 15px;
 }

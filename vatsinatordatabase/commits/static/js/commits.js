@@ -125,9 +125,27 @@ var commits = (function() {
             var description = $("<input>")
                 .attr("type", "text");
 
+            /* Confirm button */
+            var confirmButton = $("<input>")
+                .attr("type", "button")
+                .attr("disabled", "disabled")
+                .val(confirmText)
+                .addClass("cyan")
+                .click(function() {
+                    close();
+                    if (typeof(onConfirm) == "function")
+                        onConfirm(description.val(), email.val());
+                });
+
             /* E-mail input */
             var email = $("<input>")
-                .attr("type", "text");
+                .attr("type", "text")
+                .keyup(function() {
+                    if (isEmail(email.val()))
+                        confirmButton.removeAttr("disabled");
+                    else
+                        confirmButton.attr("disabled", "disabled");
+                });
 
             /* The dialog */
             var dialog = $("<div>")
@@ -174,16 +192,7 @@ var commits = (function() {
                         close();
                     })
                 )
-                .append($("<input>")
-                    .attr("type", "button")
-                    .val(confirmText)
-                    .addClass("cyan")
-                    .click(function() {
-                        close();
-                        if (typeof(onConfirm) == "function")
-                            onConfirm(description.val(), email.val());
-                    })
-                );
+                .append(confirmButton);
 
             /**
              * Opens the dialog.
@@ -448,6 +457,14 @@ var commits = (function() {
                     window.location.replace(data.url);
             }
         });
+    };
+
+    /**
+     * Verifies the e-mail address.
+     */
+    var isEmail = function(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
     };
 
     $(document).ready(function() {

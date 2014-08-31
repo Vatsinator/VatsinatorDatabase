@@ -44,18 +44,19 @@ def notify_user(sender, instance, **kwargs):
     @param kwargs: Additional arguments.
     """
     commit = instance
-    subject = "Your commit has been accepted"
-    email_from = settings.DEFAULT_FROM_EMAIL
-    email_to = [commit.email]
+    if commit.email != '':
+        subject = "Your commit has been accepted"
+        email_from = settings.DEFAULT_FROM_EMAIL
+        email_to = [commit.email]
 
-    html_content = render_to_string('commits/email-notification-user.html', {
-        'commit': commit,
-    })
+        html_content = render_to_string('commits/email-notification-user.html', {
+            'commit': commit,
+        })
 
-    text_content = render_to_string('commits/email-notification-user.txt', {
-        'commit': commit
-    })
+        text_content = render_to_string('commits/email-notification-user.txt', {
+            'commit': commit
+        })
 
-    msg = EmailMultiAlternatives(subject, text_content, email_from, email_to)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+        msg = EmailMultiAlternatives(subject, text_content, email_from, email_to)
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()

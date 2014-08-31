@@ -2,7 +2,7 @@
  * common.css
  * 
  * Author: Michał Garapich <michal@garapich.pl>
- * License: GNU General Public License
+ * License: GNU General Public License version 3
  * Version: 0.1 beta
  * 
  * ==[ TABLE OF CONTENTS ]==
@@ -59,6 +59,13 @@ input[type=button]:hover,
 input[type=submit]:hover,
 button:hover {
     color: #ffffff;
+}
+
+input[type=button]:disabled,
+input[type=submit]:disabled,
+button:disabled {
+    background-color: #48595d !important;
+    color: #777777;
 }
 
 /* Color: cyan */

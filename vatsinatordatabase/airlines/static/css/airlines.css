@@ -62,3 +62,7 @@ div.logo-form p.upload-info {
     font-size: 0.8em;
     margin: 10px;
 }
+
+span#website a {
+    font-weight: normal;
+}

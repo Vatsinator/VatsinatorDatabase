@@ -40,7 +40,11 @@
         <span class="line">
             <span class="left">Website:</span>
             <span class="right editable" id="website">
-                {{ a.website|default:"<span class=\"none\">unknown</span>" }}
+            {% if a.website %}
+                <a href="{{ a.website }}">{{ a.website }}</a>
+            {% else %}
+                <span class=\"none\">unknown</span>
+            {% endif %}
             </span>
         </span>
         </p>

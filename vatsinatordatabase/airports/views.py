@@ -77,6 +77,18 @@ def details(request, icao):
         'changes': changes
     }
 
+@ensure_csrf_cookie
+@render_to('airports/details.html')
+def new(request, icao):
+    """
+    Render "create new airport" page.
+    The page itself is handled by details.html template. At the beginning, all details are empty and the edit mode
+    is enabled. User has to fill in necessary data in order to confirm changes.
+    :param request: The HttpRequest.
+    :param icao: The new airport ICAO code.
+    :return: The HttpResponse.
+    """
+
 
 @require_POST
 @ajax_request

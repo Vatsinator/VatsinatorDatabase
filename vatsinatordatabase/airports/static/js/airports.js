@@ -122,9 +122,22 @@ var airports = (function() {
         var contentText = "In order to create the new airport, you must firstly provide its ICAO code.";
         var confirmText = "Confirm";
 
+        var $confirmButton = $("<input>")
+            .attr("type", "button")
+            .attr("disabled", "disabled")
+            .addClass("cyan")
+            .val(confirmText);
+
         var $icaoInput = $("<input>")
             .attr("type", "text")
-            .attr("maxlength", "4");
+            .attr("maxlength", "4")
+            .keyup(function() {
+                var str = $(this).val();
+                if (isIcao(str))
+                    $confirmButton.removeAttr("disabled");
+                else
+                    $confirmButton.attr("disabled", "disabled");
+            });
 
         var dialog = $("<div>")
             .addClass("newAirportIcaoDialog")
@@ -138,17 +151,17 @@ var airports = (function() {
                 .text(contentText)
             )
             .append($icaoInput)
-            .append($("<input>")
-                .attr("type", "button")
-                .addClass("cyan")
-                .val(confirmText)
-                /* TODO create the actual airport */
-            );
+            .append($confirmButton);
 
         /**
          * Opens the dialog.
          */
         var open = function() {
+            if (isIcao($icaoInput.val()))
+                $confirmButton.removeAttr("disabled");
+            else
+                $confirmButton.attr("disabled", "disabled");
+
             dialog.dialog("open", {
                 height: 120
             });
@@ -280,10 +293,22 @@ var airports = (function() {
         editDisable();
     };
 
+    /**
+     * Opens the dialog that lets user create a new airport.
+     */
     var createNew = function() {
         var icao = $("#query-original").val();
         newAirportIcaoDialog.setValue(icao);
         newAirportIcaoDialog.open();
+    };
+
+    /**
+     * Checks whether the given string is a valid airport ICAO code.
+     * @param str The string.
+     */
+    var isIcao = function(str) {
+        var regex = /^.{4}$/;
+        return regex.test(str);
     };
 
     /**

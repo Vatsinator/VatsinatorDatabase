@@ -142,6 +142,7 @@ var airports = (function() {
                 .attr("type", "button")
                 .addClass("cyan")
                 .val(confirmText)
+                /* TODO create the actual airport */
             );
 
         /**

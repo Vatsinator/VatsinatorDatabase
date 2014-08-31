@@ -29,8 +29,10 @@
     </p>
 
     {% if create_new %}
-        <input type="hidden" value="{{ q|default:"" }}" id="query-original"/>
-        <input type="button" value="Create new airport" class="cyan" id="new-airport-button"/>
+        <div id="create-new-airport">
+            <input type="hidden" value="{{ q|default:"" }}" id="query-original"/>
+            Are you sure the airport should exist? <a href="#" id="new-airport-button">Create new one</a>
+        </div>
     {% endif %}
 
     {% if airport_list %}

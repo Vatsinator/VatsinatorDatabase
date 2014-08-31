@@ -56,3 +56,9 @@ div.newAirportIcaoDialog p.content {
     font-size: 13px;
     margin: 10px;
 }
+
+div#create-new-airport {
+    display: block;
+    margin-top: 20px;
+    font-size: 12px;
+}

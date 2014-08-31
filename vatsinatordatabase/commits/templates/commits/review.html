@@ -1,10 +1,13 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
+{% load compress %}
 
 {% block title %}Commit {{ commit.token }} &bull; VatsinatorDatabase{% endblock %}
 
 {% block js %}
+    {% compress js %}
     <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
+    {% endcompress %}
 {% endblock %}
 
 {% block content %}

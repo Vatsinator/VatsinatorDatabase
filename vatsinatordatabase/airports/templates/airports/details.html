@@ -1,16 +1,21 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
+{% load compress %}
 
 {% block title %}{{ ap.icao }} {{ ap.name }}, {{ ap.city }} &bull; VatsinatorDatabase{% endblock %}
 
 {% block css %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static "css/airports.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
+    {% endcompress %}
 {% endblock %}
 
 {% block js %}
+    {% compress js %}
     <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
     <script src="{% static "js/airports.js" %}" type="text/javascript"></script>
+    {% endcompress %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd169CLoI22Vbm64nYB9i4Wzc0cvroXfI&sensor=false"></script>
 {% endblock %}
 

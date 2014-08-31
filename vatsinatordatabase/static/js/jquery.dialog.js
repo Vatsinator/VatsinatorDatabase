@@ -5,38 +5,38 @@
 
     /* Default settings. */
     var defaults = {
-        action: null,
-        overlayBackground: "rgba(10, 10, 10, 0.9)",
-        width: 500,
-        height: 200,
-        class: "dialog"
+        'action': null,
+        'overlayBackground': 'rgba(10, 10, 10, 0.9)',
+        'width': 500,
+        'height': 200,
+        'class': 'dialog'
     };
 
     var overlay = $("<div>")
         .css({
-            width: "100%",
-            height: "100%",
-            position: "fixed",
-            left: 0,
-            top: 0,
-            "z-index": 1000,
-            display: "none"
+            'width': '100%',
+            'height': '100%',
+            'position': 'fixed',
+            'left': 0,
+            'top': 0,
+            'z-index': 1000,
+            'display': 'none'
         });
 
     function prepare($object, $overlay, options) {
         $object
-            .addClass(options.class)
+            .addClass(options["class"])
             .css({
-                position: "absolute",
-                width: options.width,
-                height: options.height,
-                top: function () {
+                'position': 'absolute',
+                'width': options.width,
+                'height': options.height,
+                'top': function () {
                     return ($overlay.height() - $object.height()) / 2 - 100;
                 },
-                left: function () {
+                'left': function () {
                     return ($overlay.width() - $object.width()) / 2;
                 },
-                "z-index": 1001
+                'z-index': 1001
             });
     }
 

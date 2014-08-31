@@ -1,16 +1,21 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
+{% load compress %}
 
 {% block title %}Airports &bull; VatsinatorDatabase{% endblock %}
 
 {% block css %}
+    {% compress css %}
     <link rel="stylesheet" href="{% static "css/airports.css" %}" type="text/css"/>
     <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
+    {% endcompress %}
 {% endblock %}
 
 {% block js %}
+    {% compress js %}
     <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
     <script src="{% static "js/airports.js" %}" type="text/javascript"></script>
+    {% endcompress %}
 {% endblock %}
 
 {% block content %}

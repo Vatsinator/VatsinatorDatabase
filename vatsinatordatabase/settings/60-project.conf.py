@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.auth',
     'cookielaw',
+    'compressor',
 
     'vatsinatordatabase.airlines',
     'vatsinatordatabase.airports',

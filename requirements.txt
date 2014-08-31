@@ -1,2 +1,7 @@
 django-annoying
 django-cookie-law
+django-appconf
+lxml
+slimit
+cssmin
+django_compressor

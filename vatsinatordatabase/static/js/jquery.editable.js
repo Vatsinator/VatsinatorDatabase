@@ -27,7 +27,7 @@
         /**
          * The "edit" icon, preferably 16x16 px.
          */
-        editIcon: "",
+        editIcon: ""
     };
 
     /* User settings. */
@@ -56,7 +56,7 @@
                     background: "#ffffff url(" + options.editIcon + ") no-repeat right top",
                     height: "16px",
                     width: function() {
-                        return 16 + +options.offset;
+                        return 16 + options.offset;
                     },
                     left: function() {
                         return $object.width();

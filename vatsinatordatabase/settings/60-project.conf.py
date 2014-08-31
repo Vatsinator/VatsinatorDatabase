@@ -29,7 +29,9 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.debug',
     'django.core.context_processors.request',
+    'vatsinatordatabase.context_processors.in_beta',
 )
 
 INSTALLED_APPS = (
@@ -46,3 +48,6 @@ INSTALLED_APPS = (
     'vatsinatordatabase.commits',
     'vatsinatordatabase.firs'
 )
+
+# Turns on/off the beta mode
+IN_BETA = True

@@ -1,31 +1,36 @@
 {% extends "__base.html" %}
 {% load staticfiles %}
 {% load compress %}
+{% load humanize %}
 
-{% block title %}{{ ap.icao }} {{ ap.name }}, {{ ap.city }} &bull; VatsinatorDatabase{% endblock %}
+{% block title %}{{ ap.icao }} {% if ap.name %}{{ ap.name }},{% endif %} {% if ap.city %}{{ ap.city }}{% endif %} &bull;
+    VatsinatorDatabase{% endblock %}
 
 {% block css %}
     {% compress css %}
-    <link rel="stylesheet" href="{% static "css/airports.css" %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static "css/airports.css" %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static "css/commitsui.css" %}" type="text/css"/>
     {% endcompress %}
 {% endblock %}
 
 {% block js %}
     {% compress js %}
-    <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
-    <script src="{% static "js/airports.js" %}" type="text/javascript"></script>
+        <script src="{% static "js/commits.js" %}" type="text/javascript"></script>
+        <script src="{% static "js/airports.js" %}" type="text/javascript"></script>
     {% endcompress %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd169CLoI22Vbm64nYB9i4Wzc0cvroXfI&sensor=false"></script>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ ap.icao }} {{ ap.name }}, {{ ap.city }}</h1>
+    <h1>{{ ap.icao }} {% if ap.name %}{{ ap.name }},{% endif %} {% if ap.city %}{{ ap.city }}{% endif %}</h1>
     <input type="hidden" value="details" id="page-type"/>
+    {% if is_new %}
+        <input type="hidden" value="true" id="is_new"/>
+    {% endif %}
 
     <p id="details">
-        <input type="hidden" id="latitude" value="{{ ap.latitude }}"/>
-        <input type="hidden" id="longitude" value="{{ ap.longitude }}"/>
+        <input type="hidden" id="latitude" value="{{ ap.latitude|default:"0.0" }}"/>
+        <input type="hidden" id="longitude" value="{{ ap.longitude|default:"0.0" }}"/>
 
   <span class="line">
     <span class="left">ICAO code:</span>
@@ -78,7 +83,7 @@
             <h2>Changelog</h2>
             <ul>
                 {% for c in changes %}
-                    <li>{{ c.description }} (committed on {{ c.timestamp }})</li>
+                    <li>{{ c.description }} (committed {{ c.timestamp|naturaltime }})</li>
                 {% endfor %}
             </ul>
         {% endif %}

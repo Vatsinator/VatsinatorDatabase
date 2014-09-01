@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from django.utils.datastructures import MultiValueDictKeyError
@@ -8,7 +8,6 @@ from django.db.models import Q
 from annoying.decorators import ajax_request, render_to
 
 from vatsinatordatabase.commits.models import Commit, CommitData
-
 from models import Airport
 
 
@@ -77,6 +76,7 @@ def details(request, icao):
         'changes': changes
     }
 
+
 @ensure_csrf_cookie
 @render_to('airports/details.html')
 def new(request, icao):
@@ -88,6 +88,15 @@ def new(request, icao):
     :param icao: The new airport ICAO code.
     :return: The HttpResponse.
     """
+    try:
+        Airport.objects.get(icao=icao)
+        return redirect('airports.details', icao=icao)
+    except Airport.DoesNotExist:  # OK, the airport does not exist, we can create a new one
+        ap = Airport(icao=icao)
+        return {
+            'is_new': True,
+            'ap': ap
+        }
 
 
 @require_POST

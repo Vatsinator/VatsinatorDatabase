@@ -49,12 +49,12 @@
 
     <h1>Database statistics</h1>
     <p>
-    <ul>
-        <li>Airlines: <strong>{{ airline_count }}</strong></li>
-        <li>Airports: <strong>{{ airport_count }}</strong></li>
+    <ul tx-content="notranslate_urls">
+        <li>Airlines: <strong><span class="notranslate">{{ airline_count }}</span></strong></li>
+        <li>Airports: <strong><span class="notranslate">{{ airport_count }}</span></strong></li>
         {% if last_commit %}
             <li>Recently updated: <strong><a href="{{ last_commit.url }}">{{ last_commit.content_object }}</a></strong>
-                ({{ last_commit.description }})
+                (<span class="notranslate">{{ last_commit.description }}</span>)
             </li>
         {% endif %}
     </ul>

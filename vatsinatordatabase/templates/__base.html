@@ -30,16 +30,16 @@
 <body>
 {% cookielaw_banner %}
 <div id="header">
-    <div>
+    <div tx-content="notranslate_urls">
         <h1>
-            <a href="/">VatsinatorDatabase</a>
+            <a href="/" class="notranslate">VatsinatorDatabase</a>
             {% if in_beta %}<span class="beta">beta</span>{% endif %}
         </h1>
 
         <div id="menu">
             <ul class="menu_top">
                 <li>
-                    <a href="/browse">Browse &#x25BE;</a>
+                    <a href="/browse">Browse<span class="notranslate"> &#x25BE;</span></a>
                     <ul class="menu_sub">
                         <li><a href="/airports/">Airports</a></li>
                         <li><a href="/airlines/">Airlines</a></li>

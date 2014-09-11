@@ -110,3 +110,7 @@ var vdModule = (function () {
     // public scope
     return {}
 }());
+
+/* Alias for Transifex Live translate */
+//= require http://cdn.transifex.com/live.js
+window._ = Transifex.live.translateText;

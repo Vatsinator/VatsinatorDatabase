@@ -118,9 +118,9 @@ var airports = (function() {
      * It asks user for the ICAO code to create the new airport instance in the database.
      */
     var newAirportIcaoDialog = (function() {
-        var captionText = "Create new airport";
-        var contentText = "In order to create the new airport, you must firstly provide its ICAO code.";
-        var confirmText = "Confirm";
+        var captionText = _("Create new airport");
+        var contentText = _("In order to create the new airport, you must firstly provide its ICAO code.");
+        var confirmText = -("Confirm");
 
         var $confirmButton = $("<input>")
             .attr("type", "button")

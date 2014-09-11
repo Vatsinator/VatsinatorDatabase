@@ -47,7 +47,8 @@ INSTALLED_APPS = (
     'vatsinatordatabase.airlines',
     'vatsinatordatabase.airports',
     'vatsinatordatabase.commits',
-    'vatsinatordatabase.firs'
+    'vatsinatordatabase.firs',
+    'vatsinatordatabase',
 )
 
 # Turns on/off the beta mode

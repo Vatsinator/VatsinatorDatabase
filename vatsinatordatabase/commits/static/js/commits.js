@@ -12,15 +12,15 @@ var commits = (function() {
          * This dialog should be opened before user is allowed to modify the given object.
          */
         var editDialog = (function() {
-            var captionText = "You are now about to enter the edit mode.";
-            var contentText =
+            var captionText = _("You are now about to enter the edit mode.");
+            var contentText = _(
                 "In the edit mode, you can modify every attribute of this airport you want.     \
                  Although, after you commit the changes, they need to be reviewed and accepted  \
                  by one of our moderators. You will be notified when your modifications are     \
-                 applied to the database.";
-            var questionText = "Do you want to continue?";
-            var continueText = "Continue";
-            var cancelText = "Cancel";
+                 applied to the database.");
+            var questionText = _("Do you want to continue?");
+            var continueText = _("Continue");
+            var cancelText = _("Cancel");
 
             /* callbacks */
             var onAccept, onCancel;
@@ -109,14 +109,14 @@ var commits = (function() {
         }());
 
         var confirmDialog = (function() {
-            var captionText = "Confirm your changes";
-            var contentText =
+            var captionText = _("Confirm your changes");
+            var contentText = _(
                 "Please confirm your changes by describing them briefly and giving us your    \
-                 e-mail address, so we can let you know when they are committed.";
-            var descriptionText = "Brief description:";
-            var emailText = "E-mail address:";
-            var returnText = "Return";
-            var confirmText = "Confirm";
+                 e-mail address, so we can let you know when they are committed.");
+            var descriptionText = _("Brief description:");
+            var emailText = _("E-mail address:");
+            var returnText = _("Return");
+            var confirmText = _("Confirm");
 
             /* Callbacks */
             var onConfirm;
@@ -232,7 +232,7 @@ var commits = (function() {
 
         var progressDialog = (function() {
 
-            var progressText = "Processing...";
+            var progressText = _("Processing...");
 
             var dialog = $("<div>")
                 .addClass("progressDialog")
@@ -270,12 +270,12 @@ var commits = (function() {
 
         var successDialog = (function() {
 
-            var captionText = "Thank you";
-            var contentText =
+            var captionText = _("Thank you");
+            var contentText = _(
                 "Thank you for contributing to the Vatsinator project. Our moderators will have your    \
                  commit reviewed soon, and you will be notified when your changes are merged with the   \
-                 database.";
-            var closeText = "Close";
+                 database.");
+            var closeText = _("Close");
 
             var dialog = $("<div>")
                 .addClass("successDialog")
@@ -327,11 +327,11 @@ var commits = (function() {
 
         var errorDialog = (function() {
 
-            var captionText = "Error";
-            var contentText =
+            var captionText = _("Error");
+            var contentText = _(
                 "We are sorry, but an error occurred during processing your request.    \
-                 Please try again later.";
-            var closeText = "Close";
+                 Please try again later.");
+            var closeText = _("Close");
 
             var dialog = $("<div>")
                 .addClass("errorDialog")

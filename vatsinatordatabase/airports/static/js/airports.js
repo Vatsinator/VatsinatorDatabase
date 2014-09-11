@@ -126,7 +126,12 @@ var airports = (function() {
             .attr("type", "button")
             .attr("disabled", "disabled")
             .addClass("cyan")
-            .val(confirmText);
+            .val(confirmText)
+            .click(function() {
+                var icao = $icaoInput.val();
+                var url = getNewAirportUrl(icao);
+                window.location.replace(url);
+            });
 
         var $icaoInput = $("<input>")
             .attr("type", "text")
@@ -145,11 +150,11 @@ var airports = (function() {
             .append($("<p>")
                 .addClass("caption")
                 .text(captionText)
-            )
+        )
             .append($("<p>")
                 .addClass("content")
                 .text(contentText)
-            )
+        )
             .append($icaoInput)
             .append($confirmButton);
 
@@ -261,12 +266,21 @@ var airports = (function() {
     };
 
     /**
-     * Generates a valid url for AJAX query.
+     * Generates a valid URL for AJAX query.
      * @param icao The ICAO of the airport.
      * @returns {string} The URL.
      */
     var getCommitUrl = function(icao) {
         return "/airports/save/" + icao;
+    };
+
+    /**
+     * Generates a valid URL to redirect in order to create a new airport.
+     * @param icao The new airport's ICAO code.
+     * @returns {string} The URL.
+     */
+    var getNewAirportUrl = function(icao) {
+        return "/airports/new/" + icao.toUpperCase();
     };
 
     /**
@@ -339,6 +353,12 @@ var airports = (function() {
                 });
 
                 $fields = $(".editable");
+
+                /* If user creates new airport, enable edit mode at the very beginning */
+                if ($("#is_new").val() == "true") {
+                    editEnable();
+                }
+
                 break;
 
             case 'search':

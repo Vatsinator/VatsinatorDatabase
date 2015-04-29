@@ -45,10 +45,10 @@ INSTALLED_APPS = (
     'cookielaw',
     'compressor',
 
-    'vatsinatordatabase.airlines',
-    'vatsinatordatabase.airports',
-    'vatsinatordatabase.commits',
-    'vatsinatordatabase.firs',
+    'airlines',
+    'airports',
+    'commits',
+    'firs',
     'vatsinatordatabase',
 )
 

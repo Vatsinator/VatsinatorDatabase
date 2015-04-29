@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from annoying.decorators import ajax_request, render_to
 
-from models import Commit
+from .models import Commit
 
 
 @login_required

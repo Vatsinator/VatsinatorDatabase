@@ -8,10 +8,10 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.db.models import Q
 from annoying.decorators import ajax_request, render_to
 
-from vatsinatordatabase.commits.models import Commit, CommitData
+from commits.models import Commit, CommitData
 
-from forms import LogoUploadForm
-from models import Airline, Logo
+from .forms import LogoUploadForm
+from .models import Airline, Logo
 
 
 @render_to('airlines/search.html')

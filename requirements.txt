@@ -5,3 +5,4 @@ lxml
 slimit
 cssmin
 django_compressor
+Pillow

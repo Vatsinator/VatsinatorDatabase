@@ -5,7 +5,7 @@ from django.db import models
 from django.dispatch import Signal
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.generic import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 # The post_merge signal is sent after the commit is merged with the database.
